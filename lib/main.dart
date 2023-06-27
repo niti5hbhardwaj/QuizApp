@@ -1,0 +1,29 @@
+import 'package:flutter/material.dart';
+import 'package:quiz_app/screens/loading_screen.dart';
+import 'package:quiz_app/screens/quiz_screen.dart';
+import 'package:quiz_app/screens/score/score_screen.dart';
+import 'package:quiz_app/welcome_screen.dart';
+
+void main() {
+  runApp(const QuizApp());
+}
+
+class QuizApp extends StatelessWidget {
+  const QuizApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData.light(),
+      title: "QuizApp",
+      debugShowCheckedModeBanner: false,
+      initialRoute: WelcomeScreen.id,
+      routes: {
+        WelcomeScreen.id: (context) => const WelcomeScreen(),
+        QuizScreen.id: (context) => const QuizScreen(),
+        ScoreScreen.id: (context) => const ScoreScreen(),
+        LoadingScreen.id: (context) => const LoadingScreen(),
+      },
+    );
+  }
+}
