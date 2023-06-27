@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-Color backgroundColor = Colors.white;
-Color foregroundColor = Colors.grey.shade900;
+Color backgroundColor = Colors.grey.shade900;
+Color foregroundColor = Colors.grey.shade200;
 
 class LoadingScreen extends StatefulWidget {
   static const id = 'loading_screen';
@@ -29,15 +29,11 @@ class _LoadingScreenState extends State<LoadingScreen> {
             const SizedBox(
               height: 100,
             ),
-            Hero(
-              tag: "Text",
-              child: Text(
-                "Loading Quiz Data",
-                style: TextStyle(
-                  fontSize: 25,
-                  color: foregroundColor,
-                  fontWeight: FontWeight.bold,
-                ),
+            Text(
+              "Preparing Quiz",
+              style: TextStyle(
+                fontSize: 25,
+                color: foregroundColor,
               ),
             ),
           ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/screens/loading_screen.dart';
 import 'package:quiz_app/screens/quiz_screen.dart';
 import 'package:quiz_app/screens/score/score_screen.dart';
+import 'package:quiz_app/screens/topic_screen.dart';
 import 'package:quiz_app/screens/welcome_screen.dart';
 
 void main() {
@@ -20,6 +21,7 @@ class QuizApp extends StatelessWidget {
       initialRoute: WelcomeScreen.id,
       routes: {
         WelcomeScreen.id: (context) => const WelcomeScreen(),
+        TopicScreen.id: (context) => const TopicScreen(),
         QuizScreen.id: (context) => const QuizScreen(),
         ScoreScreen.id: (context) => const ScoreScreen(),
         LoadingScreen.id: (context) => const LoadingScreen(),

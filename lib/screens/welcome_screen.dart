@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:quiz_app/screens/loading_screen.dart';
 import 'package:quiz_app/screens/quiz_screen.dart';
+import 'package:animations/animations.dart';
 // import 'chat_api/chat_api.dart';
 
 Color backgroundColor = Colors.white;
@@ -21,36 +22,41 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Lottie.asset(
-              "assets/splash_screen_animation.json",
+              "assets/animations/splash_screen_animation.json",
               height: 300,
               fit: BoxFit.cover,
             ),
             const SizedBox(
               height: 50,
             ),
-            MaterialButton(
-              onPressed: () async {
-                Navigator.pushNamed(context, LoadingScreen.id);
-                await getQuestions();
-                Navigator.pop(context);
-                if (context.mounted) {
-                  Navigator.pushReplacementNamed(context, QuizScreen.id);
-                }
-              },
-              color: foregroundColor,
-              shape: RoundedRectangleBorder(
+            OpenContainer(
+              transitionDuration: const Duration(milliseconds: 500),
+              openBuilder: (context, closedContainer) => const LoadingScreen(),
+              openShape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50)),
+              closedShape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25)),
-              height: 50,
-              minWidth: 150,
-              elevation: 5,
-              child: Hero(
-                tag: "Text",
+              closedColor: foregroundColor,
+              closedBuilder: (context, openContainer) => MaterialButton(
+                onPressed: () async {
+                  openContainer();
+                  await getQuestions();
+                  if (context.mounted) {
+                    Navigator.pushReplacementNamed(context, QuizScreen.id);
+                  }
+                },
+                color: foregroundColor,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25)),
+                height: 50,
+                minWidth: 150,
+                elevation: 5,
                 child: Text(
                   "Start Quiz",
                   style: TextStyle(
@@ -68,7 +74,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 }
 
 Future<void> getQuestions() async {
-  await Future.delayed(Duration(seconds: 3), () {
+  await Future.delayed(const Duration(seconds: 3), () {
     print("Hello");
   });
 }

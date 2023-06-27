@@ -28,3 +28,5 @@ flutter:
 
   assets:
     - assets/
+    - assets/animations/
+    - assets/topic_files/
