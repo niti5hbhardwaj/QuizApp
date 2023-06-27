@@ -3,10 +3,9 @@ import '../data/question_bank.dart';
 import 'package:http/http.dart' as http;
 import 'api_key.dart';
 
-String message =
-    'Give me 5 physics questions as a list of json with fields "id" as int, "question_text" as string, "options" as a list of strings, "answer_index" as int';
-
-Future<void> getQuestions() async {
+Future<void> getQuestions(String topic) async {
+  String message =
+      'Give me 5 $topic questions as a list of json with fields "id" as int, "question_text" as string, "options" as a list of strings, "answer_index" as int';
   Uri uri = Uri.parse("https://api.openai.com/v1/chat/completions");
   Map<String, dynamic> body = {
     "model": "gpt-3.5-turbo",

@@ -17,7 +17,7 @@ class ScoreScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            (score! > 7)
+            (score! / numberOfQuestions! > 0.7)
                 ? Lottie.asset("assets/animations/score_screen_animation.json",
                     repeat: false)
                 : const SizedBox(
@@ -38,7 +38,7 @@ class ScoreScreen extends StatelessWidget {
               height: 10,
             ),
             Text(
-              "${score * 10}/${numberOfQuestions! * 10}",
+              "${score * 10}/${numberOfQuestions * 10}",
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     color: Colors.grey,
                     fontSize: 55,
