@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:lottie/lottie.dart';
+import 'package:quiz_app/screens/loading_screen.dart';
 import 'package:quiz_app/screens/quiz_screen.dart';
 // import 'chat_api/chat_api.dart';
 
@@ -22,47 +23,34 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     return Scaffold(
       backgroundColor: backgroundColor,
       body: Center(
-        child: (isLoading)
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SpinKitFoldingCube(
-                    color: foregroundColor,
-                    size: 100,
-                  ),
-                  const SizedBox(
-                    height: 100,
-                  ),
-                  Text(
-                    "Loading Quiz Data",
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: foregroundColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              )
-            : MaterialButton(
-                onPressed: () async {
-                  setState(() {
-                    isLoading = true;
-                  });
-                  await getQuestions();
-                  setState(() {
-                    isLoading = false;
-                  });
-                  if (context.mounted) {
-                    Navigator.pushReplacementNamed(context, QuizScreen.id);
-                  }
-                },
-                color: foregroundColor,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25)),
-                height: 50,
-                minWidth: 150,
-                elevation: 5,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Lottie.asset(
+              "assets/splash_screen_animation.json",
+              height: 300,
+              fit: BoxFit.cover,
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            MaterialButton(
+              onPressed: () async {
+                Navigator.pushNamed(context, LoadingScreen.id);
+                await getQuestions();
+                Navigator.pop(context);
+                if (context.mounted) {
+                  Navigator.pushReplacementNamed(context, QuizScreen.id);
+                }
+              },
+              color: foregroundColor,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25)),
+              height: 50,
+              minWidth: 150,
+              elevation: 5,
+              child: Hero(
+                tag: "Text",
                 child: Text(
                   "Start Quiz",
                   style: TextStyle(
@@ -71,13 +59,16 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ),
                 ),
               ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
 Future<void> getQuestions() async {
-  await Future.delayed(Duration(seconds: 2), () {
+  await Future.delayed(Duration(seconds: 5), () {
     print("Hello");
   });
 }

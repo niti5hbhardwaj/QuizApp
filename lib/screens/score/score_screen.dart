@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class ScoreScreen extends StatelessWidget {
   static const id = 'score_screen';
@@ -16,21 +17,26 @@ class ScoreScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Lottie.asset("assets/score_screen_animation.json", repeat: false),
+            const SizedBox(
+              height: 60,
+            ),
             Text(
               "Score",
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     color: Colors.grey,
-                    fontSize: 35,
+                    fontSize: 100,
+                    fontWeight: FontWeight.bold,
                   ),
             ),
             const SizedBox(
-              height: 30,
+              height: 10,
             ),
             Text(
-              "${score! * 10}/ ${numberOfQuestions! * 10}",
+              "${score! * 10}/${numberOfQuestions! * 10}",
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     color: Colors.grey,
-                    fontSize: 35,
+                    fontSize: 55,
                   ),
             ),
           ],
