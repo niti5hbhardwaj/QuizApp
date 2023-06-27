@@ -68,7 +68,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 }
 
 Future<void> getQuestions() async {
-  await Future.delayed(Duration(seconds: 5), () {
+  await Future.delayed(Duration(seconds: 3), () {
     print("Hello");
   });
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/screens/loading_screen.dart';
 import 'package:quiz_app/screens/quiz_screen.dart';
 import 'package:quiz_app/screens/score/score_screen.dart';
-import 'package:quiz_app/welcome_screen.dart';
+import 'package:quiz_app/screens/welcome_screen.dart';
 
 void main() {
   runApp(const QuizApp());
