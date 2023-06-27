@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:quiz_app/screens/quiz_screen.dart';
-import 'chat_api/chat_api.dart';
+// import 'chat_api/chat_api.dart';
+
+Color backgroundColor = Colors.white;
+Color foregroundColor = Colors.grey.shade900;
 
 class WelcomeScreen extends StatefulWidget {
   static const id = 'welcome_screen';
@@ -17,6 +20,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor,
       body: Center(
         child: (isLoading)
             ? Column(
@@ -24,7 +28,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SpinKitFoldingCube(
-                    color: Colors.blueGrey.shade900,
+                    color: foregroundColor,
                     size: 100,
                   ),
                   const SizedBox(
@@ -34,7 +38,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     "Loading Quiz Data",
                     style: TextStyle(
                       fontSize: 25,
-                      color: Colors.blueGrey.shade900,
+                      color: foregroundColor,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -53,17 +57,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     Navigator.pushReplacementNamed(context, QuizScreen.id);
                   }
                 },
-                color: Colors.blueGrey.shade900,
+                color: foregroundColor,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25)),
                 height: 50,
                 minWidth: 150,
                 elevation: 5,
-                child: const Text(
+                child: Text(
                   "Start Quiz",
                   style: TextStyle(
                     fontSize: 20,
-                    color: Colors.white,
+                    color: backgroundColor,
                   ),
                 ),
               ),
@@ -72,8 +76,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   }
 }
 
-// Future<void> getQuestions() async {
-//   await Future.delayed(Duration(seconds: 2), () {
-//     print("Hello");
-//   });
-// }
+Future<void> getQuestions() async {
+  await Future.delayed(Duration(seconds: 2), () {
+    print("Hello");
+  });
+}

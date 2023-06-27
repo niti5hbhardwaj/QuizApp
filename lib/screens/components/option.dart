@@ -30,24 +30,27 @@ class Option extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              "${index + 1}. $optionText",
-              style: TextStyle(
-                color: color,
-                fontSize: 16,
+            Expanded(
+              child: Text(
+                "${index + 1}. $optionText",
+                style: TextStyle(
+                  color: color,
+                  fontSize: 16,
+                ),
               ),
             ),
             Container(
               height: 26,
               width: 26,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
+                borderRadius: BorderRadius.circular(13),
                 border: Border.all(color: color),
                 color: (icon != null) ? color : Colors.transparent,
               ),
               child: Icon(
                 icon,
                 color: Colors.white,
+                size: 18,
               ),
             ),
           ],

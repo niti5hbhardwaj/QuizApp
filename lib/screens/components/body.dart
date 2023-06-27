@@ -67,10 +67,11 @@ class _QuestionBodyState extends State<QuestionBody> {
                           curve: Curves.ease);
                     }
                   },
-                  child: const Text(
+                  child: Text(
                     "Skip",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.grey.shade300,
+                      fontSize: 20,
                     ),
                   ),
                 ),

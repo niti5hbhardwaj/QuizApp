@@ -67,12 +67,17 @@ class _QuestionCardState extends State<QuestionCard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          const SizedBox(
+            height: 12.5,
+          ),
           Text(
             widget.question.questionText,
             style: TextStyle(
               color: Colors.grey.shade900,
-              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
             ),
+            textAlign: TextAlign.center,
           ),
           const SizedBox(
             height: 12.5,
