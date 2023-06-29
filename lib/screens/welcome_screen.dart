@@ -3,7 +3,6 @@ import 'package:lottie/lottie.dart';
 import 'package:quiz_app/screens/loading_screen.dart';
 import 'package:quiz_app/screens/quiz_screen.dart';
 import 'package:animations/animations.dart';
-// import 'chat_api/chat_api.dart';
 
 Color backgroundColor = Colors.white;
 Color foregroundColor = Colors.grey.shade900;

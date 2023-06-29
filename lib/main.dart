@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/screens/error_screen.dart';
 import 'package:quiz_app/screens/loading_screen.dart';
 import 'package:quiz_app/screens/quiz_screen.dart';
 import 'package:quiz_app/screens/score/score_screen.dart';
@@ -25,6 +26,7 @@ class QuizApp extends StatelessWidget {
         QuizScreen.id: (context) => const QuizScreen(),
         ScoreScreen.id: (context) => const ScoreScreen(),
         LoadingScreen.id: (context) => const LoadingScreen(),
+        BrokenLinkScreen.id: (context) => const BrokenLinkScreen(),
       },
     );
   }
