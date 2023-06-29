@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:quiz_app/screens/loading_screen.dart';
-import 'package:quiz_app/screens/quiz_screen.dart';
-import 'package:animations/animations.dart';
+import 'package:quiz_app/screens/topic_screen.dart';
 
 Color backgroundColor = Colors.white;
 Color foregroundColor = Colors.grey.shade900;
@@ -29,39 +27,26 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             Lottie.asset(
               "assets/animations/splash_screen_animation.json",
               height: 300,
-              fit: BoxFit.cover,
+              fit: BoxFit.contain,
             ),
             const SizedBox(
               height: 50,
             ),
-            OpenContainer(
-              transitionDuration: const Duration(milliseconds: 500),
-              openBuilder: (context, closedContainer) => const LoadingScreen(),
-              openShape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50)),
-              closedShape: RoundedRectangleBorder(
+            MaterialButton(
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, TopicScreen.id);
+              },
+              color: foregroundColor,
+              shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25)),
-              closedColor: foregroundColor,
-              closedBuilder: (context, openContainer) => MaterialButton(
-                onPressed: () async {
-                  openContainer();
-                  await getQuestions();
-                  if (context.mounted) {
-                    Navigator.pushReplacementNamed(context, QuizScreen.id);
-                  }
-                },
-                color: foregroundColor,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25)),
-                height: 50,
-                minWidth: 150,
-                elevation: 5,
-                child: Text(
-                  "Start Quiz",
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: backgroundColor,
-                  ),
+              height: 50,
+              minWidth: 160,
+              elevation: 5,
+              child: Text(
+                "Take a Quiz",
+                style: TextStyle(
+                  fontSize: 20,
+                  color: backgroundColor,
                 ),
               ),
             ),
@@ -70,10 +55,4 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       ),
     );
   }
-}
-
-Future<void> getQuestions() async {
-  await Future.delayed(const Duration(seconds: 3), () {
-    print("Hello");
-  });
 }

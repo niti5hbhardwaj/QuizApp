@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:quiz_app/screens/summary.dart';
+import 'package:quiz_app/screens/topic_screen.dart';
+
+const Color foregroundColor = Colors.grey;
 
 class ScoreScreen extends StatelessWidget {
   static const id = 'score_screen';
@@ -29,7 +33,7 @@ class ScoreScreen extends StatelessWidget {
             Text(
               "Score",
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: Colors.grey,
+                    color: foregroundColor,
                     fontSize: 100,
                     fontWeight: FontWeight.bold,
                   ),
@@ -40,9 +44,53 @@ class ScoreScreen extends StatelessWidget {
             Text(
               "${score * 10}/${numberOfQuestions * 10}",
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: Colors.grey,
+                    color: foregroundColor,
                     fontSize: 55,
                   ),
+            ),
+            const SizedBox(
+              height: 80,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                MaterialButton(
+                  height: 55,
+                  minWidth: 160,
+                  color: foregroundColor,
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, TopicScreen.id);
+                  },
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: const Text(
+                    "Take another quiz",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+                MaterialButton(
+                  height: 55,
+                  minWidth: 160,
+                  color: foregroundColor,
+                  onPressed: () {
+                    Navigator.pushNamed(context, SummaryScreen.id);
+                  },
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: const Text(
+                    "Check Solutions",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
