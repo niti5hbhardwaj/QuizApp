@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:quiz_app/chat_api/chat_api.dart';
+import 'package:quiz_app/chat_api/chat_api.dart';
 import 'package:quiz_app/screens/quiz_screen.dart';
 import '../data/topics.dart';
 import 'error_screen.dart';
@@ -56,11 +56,11 @@ class TopicScreen extends StatelessWidget {
     );
   }
 }
-
-Future<bool> getQuestions(String topic) async {
-  await Future.delayed(const Duration(seconds: 3), () {
-    print("Hello");
-    return true;
-  });
-  return true;
-}
+//
+// Future<bool> getQuestions(String topic) async {
+//   await Future.delayed(const Duration(seconds: 1, milliseconds: 800), () {
+//     log("Hello");
+//     return true;
+//   });
+//   return true;
+// }

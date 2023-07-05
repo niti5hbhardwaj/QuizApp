@@ -4,16 +4,21 @@ import '../models/question.dart';
 class QuizBrain {
   int _currentQuestionNumber = 1;
   int _numberOfCorrectAnswers = 0;
+  static List<Question> questions = [];
+
+  QuizBrain() {
+    questions = sampleData
+        .map((question) => Question(
+            id: question["id"],
+            questionText: question["question_text"],
+            answer: question["answer_index"],
+            tempOptions: question["options"],
+            explanation: question["explanation"]))
+        .toList();
+  }
 
   //TODO: make the list of questions a private member
-  static final List<Question> questions = sampleData
-      .map((question) => Question(
-          id: question["id"],
-          questionText: question["question_text"],
-          answer: question["answer_index"],
-          tempOptions: question["options"],
-          explanation: question["explanation"]))
-      .toList();
+  // static List<Question>
 
   int getNumberOfQuestions() {
     return questions.length;

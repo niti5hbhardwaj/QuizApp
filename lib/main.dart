@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/screens/chat_screen/chat_screen.dart';
 import 'package:quiz_app/screens/error_screen.dart';
 import 'package:quiz_app/screens/loading_screen.dart';
 import 'package:quiz_app/screens/quiz_screen.dart';
@@ -29,6 +30,7 @@ class QuizApp extends StatelessWidget {
         QuizScreen.id: (context) => const QuizScreen(),
         ScoreScreen.id: (context) => const ScoreScreen(),
         SummaryScreen.id: (context) => const SummaryScreen(),
+        ChatScreen.id: (context) => const ChatScreen(),
       },
     );
   }

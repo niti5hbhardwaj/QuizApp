@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/controllers/quiz_brain.dart';
+import 'package:quiz_app/screens/chat_screen/chat_screen.dart';
 import 'package:quiz_app/screens/components/summary_card.dart';
 
 class SummaryScreen extends StatelessWidget {
@@ -18,7 +19,13 @@ class SummaryScreen extends StatelessWidget {
       body: ListView.builder(
         itemCount: QuizBrain.questions.length,
         itemBuilder: (context, index) {
-          return SummaryCard(index: index);
+          return SummaryCard(
+            index: index,
+            onPressed: () {
+              Navigator.pushNamed(context, ChatScreen.id,
+                  arguments: QuizBrain.questions[index].questionText);
+            },
+          );
         },
       ),
     );

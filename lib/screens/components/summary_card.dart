@@ -4,9 +4,11 @@ import '../../controllers/quiz_brain.dart';
 
 class SummaryCard extends StatelessWidget {
   final int index;
+  final VoidCallback onPressed;
   const SummaryCard({
     super.key,
     required this.index,
+    required this.onPressed,
   });
 
   @override
@@ -76,7 +78,7 @@ class SummaryCard extends StatelessWidget {
               ),
               MaterialButton(
                 color: Colors.blue.shade300,
-                onPressed: () {},
+                onPressed: onPressed,
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 elevation: 0,
                 shape: RoundedRectangleBorder(
