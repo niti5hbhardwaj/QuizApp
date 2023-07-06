@@ -78,12 +78,14 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
           Container(
             margin: const EdgeInsets.all(15),
+            padding: const EdgeInsets.only(right: 5),
             height: 50,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(25),
               color: Colors.white,
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
                   child: TextField(
@@ -95,8 +97,12 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                 ),
                 IconButton(
+                  splashRadius: 1,
                   onPressed: () {
-                    insertMessage(_messageController.text.trim(), Sender.user);
+                    String messageText = _messageController.text.trim();
+                    if (messageText != '') {
+                      insertMessage(messageText, Sender.user);
+                    }
                   },
                   icon: const Icon(Icons.send),
                 ),

@@ -56,7 +56,7 @@ Future<String> getResponse(String messageText) async {
           },
           body: json.encode(body),
         )
-        .timeout(Duration(seconds: 10));
+        .timeout(const Duration(seconds: 15));
     Map<String, dynamic> parsedResponse = json.decode(response.body);
     final reply = parsedResponse["choices"][0]["message"]["content"];
     return reply;
