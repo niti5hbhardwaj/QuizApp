@@ -28,7 +28,6 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/
     - assets/animations/
-    - assets/topic_files/
     - assets/images/
+    - assets/subject_icons/

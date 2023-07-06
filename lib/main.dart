@@ -8,7 +8,7 @@ import 'package:quiz_app/screens/quiz_screen.dart';
 import 'package:quiz_app/screens/score/score_screen.dart';
 import 'package:quiz_app/screens/welcome/signup/signup_screen.dart';
 import 'package:quiz_app/screens/summary.dart';
-import 'package:quiz_app/screens/topic_screen.dart';
+import 'package:quiz_app/screens/topic/topic_screen.dart';
 import 'package:quiz_app/screens/welcome_screen.dart';
 
 void main() {

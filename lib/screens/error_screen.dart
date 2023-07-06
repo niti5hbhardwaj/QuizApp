@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/screens/topic_screen.dart';
+import 'package:quiz_app/screens/topic/topic_screen.dart';
 
 class BrokenLinkScreen extends StatelessWidget {
   static const id = "broken_link_screen";

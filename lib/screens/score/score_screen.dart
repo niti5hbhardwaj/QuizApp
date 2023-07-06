@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:quiz_app/screens/summary.dart';
-import 'package:quiz_app/screens/topic_screen.dart';
+import 'package:quiz_app/screens/topic/topic_screen.dart';
 
 const Color foregroundColor = Colors.grey;
 

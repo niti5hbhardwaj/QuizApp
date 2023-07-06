@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:quiz_app/screens/topic_screen.dart';
+import 'package:quiz_app/screens/topic/topic_screen.dart';
 
 Color backgroundColor = Colors.white;
 Color foregroundColor = Colors.grey.shade900;
