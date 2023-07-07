@@ -10,11 +10,18 @@ class SummaryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade900,
+      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
+        foregroundColor: Colors.blueGrey.shade900,
         backgroundColor: Colors.transparent,
-        title: Text("Explanations".toUpperCase()),
+        title: Text(
+          "Explanations".toUpperCase(),
+          style: TextStyle(
+            color: Colors.blueGrey.shade900,
+          ),
+        ),
         centerTitle: true,
+        elevation: 0,
       ),
       body: ListView.builder(
         itemCount: QuizBrain.questions.length,

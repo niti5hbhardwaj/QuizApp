@@ -3,7 +3,8 @@ import 'package:lottie/lottie.dart';
 import 'package:quiz_app/screens/summary.dart';
 import 'package:quiz_app/screens/topic/topic_screen.dart';
 
-const Color foregroundColor = Colors.grey;
+Color foregroundColor = Colors.blueGrey.shade900;
+Color backgroundColor = Colors.grey.shade100;
 
 class ScoreScreen extends StatelessWidget {
   static const id = 'score_screen';
@@ -16,7 +17,7 @@ class ScoreScreen extends StatelessWidget {
     int? score = arguments["score"];
     int? numberOfQuestions = arguments["total_questions"];
     return Scaffold(
-      backgroundColor: Colors.grey.shade900,
+      backgroundColor: backgroundColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -67,7 +68,7 @@ class ScoreScreen extends StatelessWidget {
                   child: const Text(
                     "Take another quiz",
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Colors.white,
                       fontSize: 15,
                     ),
                   ),
@@ -85,7 +86,7 @@ class ScoreScreen extends StatelessWidget {
                   child: const Text(
                     "Check Solutions",
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Colors.white,
                       fontSize: 15,
                     ),
                   ),

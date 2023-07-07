@@ -26,7 +26,7 @@ class QuizApp extends StatelessWidget {
       theme: ThemeData.light(),
       title: "QuizApp",
       debugShowCheckedModeBanner: false,
-      initialRoute: LoginScreen.id,
+      initialRoute: TopicScreen.id,
       routes: {
         WelcomeScreen.id: (context) => const WelcomeScreen(),
         TopicScreen.id: (context) => const TopicScreen(),

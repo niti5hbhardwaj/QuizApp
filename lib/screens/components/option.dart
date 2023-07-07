@@ -4,10 +4,10 @@ class Option extends StatelessWidget {
   final String optionText;
   final int index;
   final VoidCallback onPressed;
-  Color color;
-  IconData? icon;
+  final Color color;
+  final IconData? icon;
 
-  Option({
+  const Option({
     super.key,
     required this.optionText,
     required this.index,
@@ -37,7 +37,7 @@ class Option extends StatelessWidget {
               child: Text(
                 "${index + 1}. $optionText",
                 style: TextStyle(
-                  color: color,
+                  color: (color == Colors.grey) ? Colors.grey.shade800 : color,
                   fontSize: 16,
                 ),
               ),

@@ -54,13 +54,17 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
-        title: const Text("ChatGPT"),
+        backgroundColor: Colors.grey.shade100,
+        foregroundColor: Colors.blueGrey.shade900,
+        title: Text(
+          "ChatGPT",
+          style: TextStyle(color: Colors.blueGrey.shade900),
+        ),
         centerTitle: true,
-        backgroundColor: Colors.grey.shade900,
         elevation: 0,
       ),
-      backgroundColor: Colors.grey.shade900,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -104,7 +108,10 @@ class _ChatScreenState extends State<ChatScreen> {
                       insertMessage(messageText, Sender.user);
                     }
                   },
-                  icon: const Icon(Icons.send),
+                  icon: Icon(
+                    Icons.send,
+                    color: Colors.blueGrey.shade900,
+                  ),
                 ),
               ],
             ),

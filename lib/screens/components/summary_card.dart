@@ -19,6 +19,14 @@ class SummaryCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(25),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade300,
+            blurRadius: 10,
+            spreadRadius: 4,
+            offset: Offset.fromDirection(1, 7),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -26,7 +34,7 @@ class SummaryCard extends StatelessWidget {
           Text(
             "Q: ${QuizBrain.questions[index].questionText}",
             style: TextStyle(
-              color: Colors.grey.shade900,
+              color: Colors.blueGrey.shade900,
               fontWeight: FontWeight.bold,
               fontSize: 15,
             ),

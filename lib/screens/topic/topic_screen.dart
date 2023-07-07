@@ -1,6 +1,6 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:quiz_app/screens/topic/subject_icon_tile.dart';
+import 'package:quiz_app/screens/topic/components/subject_icon_tile.dart';
+import '../../chat_api/chat_api.dart';
 import '../../data/topics.dart';
 import '../error_screen.dart';
 import '../loading_screen.dart';
@@ -27,6 +27,7 @@ class TopicScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade100,
       body: Column(
         children: [
           Expanded(
@@ -87,10 +88,10 @@ class TopicScreen extends StatelessWidget {
   }
 }
 
-Future<bool> getQuestions(String topic) async {
-  await Future.delayed(const Duration(seconds: 1, milliseconds: 800), () {
-    log("Hello");
-    return true;
-  });
-  return true;
-}
+// Future<bool> getQuestions(String topic) async {
+//   await Future.delayed(const Duration(seconds: 1, milliseconds: 800), () {
+//     log("Hello");
+//     return true;
+//   });
+//   return true;
+// }

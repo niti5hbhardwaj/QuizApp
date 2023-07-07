@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:quiz_app/controllers/quiz_brain.dart';
 import '../../models/question.dart';
@@ -31,6 +32,27 @@ class _QuestionCardState extends State<QuestionCard> {
     await Future.delayed(const Duration(seconds: 1), () {});
   }
 
+  void checkAnswerAndMoveForward(index) async {
+    selectedOption = index;
+    await checkAnswer(index);
+    if (widget.controller.page! + 1 ==
+        widget.quizBrain.getNumberOfQuestions()) {
+      if (context.mounted) {
+        Navigator.pushReplacementNamed(
+          context,
+          ScoreScreen.id,
+          arguments: {
+            "score": widget.quizBrain.getNumberOfCorrectAnswers(),
+            "total_questions": widget.quizBrain.getNumberOfQuestions()
+          },
+        );
+      }
+    } else {
+      widget.controller.nextPage(
+          duration: const Duration(milliseconds: 250), curve: Curves.ease);
+    }
+  }
+
   Color getCorrectColor(int index) {
     if (answered) {
       if (index == widget.question.answer) {
@@ -57,63 +79,68 @@ class _QuestionCardState extends State<QuestionCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
-      padding: const EdgeInsets.all(25),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(25),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const SizedBox(
-            height: 12.5,
-          ),
-          Text(
-            widget.question.questionText,
-            style: TextStyle(
-              color: Colors.grey.shade900,
-              fontWeight: FontWeight.bold,
-              fontSize: 22,
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Container(
+        // margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
+        padding: const EdgeInsets.all(25),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(25),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.shade300,
+              blurRadius: 10,
+              spreadRadius: 4,
+              offset: Offset.fromDirection(1, 7),
             ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(
-            height: 12.5,
-          ),
-          ...List.generate(
-            widget.question.options.length,
-            (index) => Option(
-              optionText: widget.question.options[index],
-              index: index,
-              color: getCorrectColor(index),
-              onPressed: () async {
-                selectedOption = index;
-                await checkAnswer(index);
-                if (widget.controller.page! + 1 ==
-                    widget.quizBrain.getNumberOfQuestions()) {
-                  if (context.mounted) {
-                    Navigator.pushReplacementNamed(
-                      context,
-                      ScoreScreen.id,
-                      arguments: {
-                        "score": widget.quizBrain.getNumberOfCorrectAnswers(),
-                        "total_questions":
-                            widget.quizBrain.getNumberOfQuestions()
-                      },
-                    );
-                  }
-                } else {
-                  widget.controller.nextPage(
-                      duration: const Duration(milliseconds: 250),
-                      curve: Curves.ease);
-                }
-              },
-              icon: getCorrectIcon(index),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const SizedBox(
+              height: 12.5,
             ),
-          ),
-        ],
+            Text(
+              widget.question.questionText,
+              style: TextStyle(
+                color: Colors.blueGrey.shade900,
+                fontWeight: FontWeight.bold,
+                fontSize: 22,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: 12.5,
+            ),
+            Expanded(
+              child: ScrollConfiguration(
+                behavior: const ScrollBehavior().copyWith(
+                  overscroll: false,
+                ),
+                child: ListView(
+                  children: [
+                    ...List.generate(
+                      widget.question.options.length,
+                      (index) => Option(
+                        optionText: widget.question.options[index],
+                        index: index,
+                        color: getCorrectColor(index),
+                        onPressed: () {
+                          (!answered)
+                              ? checkAnswerAndMoveForward(index)
+                              : () {};
+                        },
+                        icon: getCorrectIcon(index),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
