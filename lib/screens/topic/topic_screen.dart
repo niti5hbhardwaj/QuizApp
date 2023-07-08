@@ -1,7 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:quiz_app/screens/profile/profile.dart';
 import 'package:quiz_app/screens/topic/components/subject_icon_tile.dart';
-import 'package:quiz_app/screens/welcome/login/login_screen.dart';
 import '../../chat_api/chat_api.dart';
 import '../../data/topics.dart';
 import '../error_screen.dart';
@@ -31,13 +31,6 @@ class _TopicScreenState extends State<TopicScreen> {
     }
   }
 
-  void logout() async {
-    await FirebaseAuth.instance.signOut();
-    if (context.mounted) {
-      Navigator.pushReplacementNamed(context, LoginScreen.id);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,12 +41,21 @@ class _TopicScreenState extends State<TopicScreen> {
             flex: 1,
             child: Padding(
               padding: const EdgeInsets.only(
-                  top: 16, bottom: 16, left: 20, right: 8),
+                  top: 16, bottom: 16, left: 20, right: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.grey.shade300,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, ProfileScreen.id);
+                    },
+                    child: Hero(
+                      tag: "profile_pic",
+                      child: CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Colors.grey.shade300,
+                      ),
+                    ),
                   ),
                   const Expanded(
                     flex: 1,
@@ -65,11 +67,8 @@ class _TopicScreenState extends State<TopicScreen> {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  IconButton(
-                    onPressed: () {
-                      logout();
-                    },
-                    icon: const Icon(Icons.logout),
+                  const SizedBox(
+                    width: 40,
                   ),
                 ],
               ),
@@ -104,10 +103,10 @@ class _TopicScreenState extends State<TopicScreen> {
   }
 }
 
-// Future<bool> getQuestions(String topic) async {
-//   await Future.delayed(const Duration(seconds: 1, milliseconds: 800), () {
-//     log("Hello");
-//     return true;
-//   });
-//   return true;
-// }
+Future<bool> getQuestions(String topic) async {
+  await Future.delayed(const Duration(seconds: 1, milliseconds: 800), () {
+    log("Hello");
+    return true;
+  });
+  return true;
+}

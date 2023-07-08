@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:quiz_app/screens/chat_screen/chat_screen.dart';
 import 'package:quiz_app/screens/error_screen.dart';
 import 'package:quiz_app/screens/loading_screen.dart';
+import 'package:quiz_app/screens/profile/profile.dart';
 import 'package:quiz_app/screens/welcome/login/login_screen.dart';
 import 'package:quiz_app/screens/quiz_screen.dart';
 import 'package:quiz_app/screens/score/score_screen.dart';
@@ -30,20 +31,22 @@ class QuizApp extends StatelessWidget {
       theme: ThemeData.light(),
       title: "QuizApp",
       debugShowCheckedModeBanner: false,
-      initialRoute: (FirebaseAuth.instance.currentUser != null)
-          ? TopicScreen.id
-          : LoginScreen.id,
+      // initialRoute: (FirebaseAuth.instance.currentUser != null)
+      //     ? TopicScreen.id
+      //     : LoginScreen.id,
+      initialRoute: TopicScreen.id,
       routes: {
         WelcomeScreen.id: (context) => const WelcomeScreen(),
+        LoginScreen.id: (context) => const LoginScreen(),
+        SignUpScreen.id: (context) => const SignUpScreen(),
         TopicScreen.id: (context) => const TopicScreen(),
+        ProfileScreen.id: (context) => const ProfileScreen(),
         LoadingScreen.id: (context) => const LoadingScreen(),
         BrokenLinkScreen.id: (context) => const BrokenLinkScreen(),
         QuizScreen.id: (context) => const QuizScreen(),
         ScoreScreen.id: (context) => const ScoreScreen(),
         SummaryScreen.id: (context) => const SummaryScreen(),
         ChatScreen.id: (context) => const ChatScreen(),
-        LoginScreen.id: (context) => const LoginScreen(),
-        SignUpScreen.id: (context) => const SignUpScreen(),
       },
     );
   }
