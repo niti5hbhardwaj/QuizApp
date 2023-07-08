@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "835755430542",
+    "project_id": "quizapp-x-flutter",
+    "storage_bucket": "quizapp-x-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:835755430542:android:2e718d1b54d855bdf92fdf",
+        "android_client_info": {
+          "package_name": "com.niti5h.quiz_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "835755430542-tk7mpb8e5j9ik61h7r144l4f71p3nrvq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcDUiaodUURxTG2_aN9IWTyhvAbxlT0A8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "835755430542-tk7mpb8e5j9ik61h7r144l4f71p3nrvq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

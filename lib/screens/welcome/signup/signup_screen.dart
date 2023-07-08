@@ -1,4 +1,7 @@
+import 'dart:developer';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../../topic/topic_screen.dart';
 import '../components/already_have_an_account_check.dart';
 import '../components/rounded_button.dart';
 import '../components/rounded_input_field.dart';
@@ -8,9 +11,38 @@ import 'components/background.dart';
 const Color primaryColor = Color.fromARGB(255, 238, 68, 43);
 const Color secondaryColor = Color.fromARGB(255, 254, 222, 218);
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   static const id = "signup_screen";
   const SignUpScreen({super.key});
+
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  void register() async {
+    String email = _emailController.text.trim();
+    String password = _passwordController.text.trim();
+
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      if (userCredential.user != null) {
+        if (context.mounted) {
+          Navigator.pushNamed(context, TopicScreen.id);
+        }
+        setState(() {
+          _emailController.clear();
+          _passwordController.clear();
+        });
+      }
+    } on FirebaseAuthException catch (e) {
+      log(e.code.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,19 +69,23 @@ class SignUpScreen extends StatelessWidget {
                 height: size.height * 0.35,
               ),
               SizedBox(height: size.height * 0.03),
-              const RoundedInputField(
+              RoundedInputField(
+                controller: _emailController,
                 iconData: Icons.person,
                 hintText: 'Email',
                 containerColor: secondaryColor,
                 iconColor: primaryColor,
               ),
-              const RoundedPasswordField(
+              RoundedPasswordField(
+                controller: _passwordController,
                 containerColor: secondaryColor,
                 iconColor: primaryColor,
               ),
               RoundedButton(
                 text: 'REGISTER',
-                onPressed: () {},
+                onPressed: () {
+                  register();
+                },
                 buttonColor: primaryColor,
               ),
               SizedBox(height: size.height * 0.03),

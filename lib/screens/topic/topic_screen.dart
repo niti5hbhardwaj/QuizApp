@@ -1,15 +1,22 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_app/screens/topic/components/subject_icon_tile.dart';
+import 'package:quiz_app/screens/welcome/login/login_screen.dart';
 import '../../chat_api/chat_api.dart';
 import '../../data/topics.dart';
 import '../error_screen.dart';
 import '../loading_screen.dart';
 import '../quiz_screen.dart';
 
-class TopicScreen extends StatelessWidget {
+class TopicScreen extends StatefulWidget {
   static const id = 'topic_screen';
   const TopicScreen({super.key});
 
+  @override
+  State<TopicScreen> createState() => _TopicScreenState();
+}
+
+class _TopicScreenState extends State<TopicScreen> {
   void startQuiz(context, index) async {
     bool success;
     Navigator.pushNamed(context, LoadingScreen.id);
@@ -21,6 +28,13 @@ class TopicScreen extends StatelessWidget {
       Navigator.pushReplacementNamed(context, QuizScreen.id);
     } else {
       Navigator.pushReplacementNamed(context, BrokenLinkScreen.id);
+    }
+  }
+
+  void logout() async {
+    await FirebaseAuth.instance.signOut();
+    if (context.mounted) {
+      Navigator.pushReplacementNamed(context, LoginScreen.id);
     }
   }
 
@@ -52,7 +66,9 @@ class TopicScreen extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      logout();
+                    },
                     icon: const Icon(Icons.logout),
                   ),
                 ],
