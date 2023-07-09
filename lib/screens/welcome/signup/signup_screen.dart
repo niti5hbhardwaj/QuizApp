@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../topic/topic_screen.dart';
@@ -22,24 +23,42 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void register() async {
-    String email = _emailController.text.trim();
+    String name = _nameController.text.trim();
+    String email = _emailController.text.trim().toLowerCase();
     String password = _passwordController.text.trim();
 
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
       if (userCredential.user != null) {
-        if (context.mounted) {
-          Navigator.pushNamed(context, TopicScreen.id);
+        Map<String, dynamic> userData = {
+          "Name": name,
+          "Email": email,
+          "Score": 0,
+          "Phone Number": null,
+          "Date of Birth": "Select",
+        };
+        try {
+          await _firestore.collection("users").doc(email).set(userData);
+          if (context.mounted) {
+            Navigator.pushNamed(context, TopicScreen.id);
+          }
+          setState(() {
+            _emailController.clear();
+            _passwordController.clear();
+            _nameController.clear();
+          });
+        } on FirebaseException catch (e) {
+          userCredential.user!.delete();
+          log(e.code.toString());
         }
-        setState(() {
-          _emailController.clear();
-          _passwordController.clear();
-        });
       }
     } on FirebaseAuthException catch (e) {
+      //TODO: show snack-bar
       log(e.code.toString());
     }
   }
@@ -70,8 +89,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               SizedBox(height: size.height * 0.03),
               RoundedInputField(
-                controller: _emailController,
+                controller: _nameController,
                 iconData: Icons.person,
+                hintText: 'Name',
+                containerColor: secondaryColor,
+                iconColor: primaryColor,
+              ),
+              RoundedInputField(
+                controller: _emailController,
+                iconData: Icons.email_rounded,
                 hintText: 'Email',
                 containerColor: secondaryColor,
                 iconColor: primaryColor,

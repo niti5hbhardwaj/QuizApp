@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'inplace_text_editor.dart';
 
-class DetailFieldRow extends StatelessWidget {
+class DetailFieldRow extends StatefulWidget {
   final String fieldName;
-  final String fieldData;
+  late String fieldData;
   final bool editable;
-  const DetailFieldRow({
+  DetailFieldRow({
     super.key,
     required this.fieldName,
     required this.fieldData,
@@ -12,32 +13,70 @@ class DetailFieldRow extends StatelessWidget {
   });
 
   @override
+  State<DetailFieldRow> createState() => _DetailFieldRowState();
+}
+
+class _DetailFieldRowState extends State<DetailFieldRow> {
+  bool editing = false;
+  final TextEditingController _controller = TextEditingController();
+
+  void submitPhoneNumber(String value) {
+    if (value.length != 10) {
+      print("error: not 10 digits");
+    } else {
+      setState(() {
+        editing = false;
+        widget.fieldData = value;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          fieldName,
-          style: TextStyle(
-            color: Colors.blueGrey.shade900,
-            fontSize: 17,
-            fontWeight: FontWeight.w500,
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5.0),
+          child: Text(
+            widget.fieldName,
+            style: TextStyle(
+              color: Colors.blueGrey.shade900,
+              fontSize: 17,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              fieldData,
-              style: TextStyle(
-                color: Colors.grey.shade500,
-                fontSize: 17,
-              ),
+            GestureDetector(
+              onTap: () {
+                if (widget.editable) {
+                  setState(() {
+                    editing = true;
+                    _controller.text = widget.fieldData;
+                  });
+                }
+              },
+              child: (!editing)
+                  ? Text(
+                      widget.fieldData,
+                      style: TextStyle(
+                        color: Colors.grey.shade500,
+                        fontSize: 17,
+                      ),
+                    )
+                  : InPlaceTextEditor(
+                      controller: _controller,
+                      onSubmitted: submitPhoneNumber,
+                    ),
             ),
-            (editable)
+            (widget.editable)
                 ? Icon(
                     Icons.chevron_right,
                     color: Colors.grey.shade500,
-                    size: 20,
+                    size: (!editing) ? 20 : 1,
                   )
                 : Container(),
           ],

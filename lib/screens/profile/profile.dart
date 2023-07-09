@@ -1,6 +1,11 @@
+import 'dart:developer';
+import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:quiz_app/screens/profile/components/elevated_container.dart';
 import 'package:quiz_app/screens/profile/components/logout_button.dart';
+import 'package:quiz_app/screens/welcome/login/login_screen.dart';
 import 'components/actionable_icon_button.dart';
 import 'components/details_container.dart';
 import 'components/my_appbar.dart';
@@ -14,9 +19,34 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  String name = "Default";
+  late String score = "null";
+  File? profilePic;
+
+  void pickImage() async {
+    XFile? pickedXFileImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedXFileImage != null) {
+      File imageFile = File(pickedXFileImage.path);
+      setState(() {
+        profilePic = imageFile;
+      });
+    } else {
+      log("No file selected");
+    }
+  }
+
+  void deleteAccount() async {
+    await FirebaseAuth.instance.currentUser?.delete();
+    if (context.mounted) {
+      Navigator.pushReplacementNamed(context, LoginScreen.id);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey.shade100,
       body: Column(
         children: [
@@ -31,16 +61,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 Hero(
                   tag: "profile_pic",
-                  child: CircleAvatar(
-                    backgroundColor: Colors.grey.shade300,
-                    radius: 75,
+                  child: GestureDetector(
+                    onTap: pickImage,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.grey.shade300,
+                      radius: 75,
+                      backgroundImage:
+                          (profilePic != null) ? FileImage(profilePic!) : null,
+                    ),
                   ),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 Text(
-                  "Nitish Bhardwaj",
+                  name,
                   style: TextStyle(
                     color: Colors.blueGrey.shade800,
                     fontSize: 30,
@@ -62,7 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     Text(
-                      "1750",
+                      score,
                       style: TextStyle(
                         color: Colors.blueGrey.shade900,
                         fontSize: 20,
@@ -100,6 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               text: "Change Password",
                               iconBackgroundColor: Colors.blueGrey.shade900,
                               iconColor: Colors.white,
+                              onTap: () {},
                             ),
                             const Divider(
                               height: 20,
@@ -110,6 +146,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               text: "Delete Account",
                               iconBackgroundColor: Colors.blueGrey.shade900,
                               iconColor: Colors.white,
+                              onTap: deleteAccount,
                             ),
                           ],
                         ),
@@ -121,6 +158,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           text: "About the app",
                           iconBackgroundColor: Colors.blueGrey.shade900,
                           iconColor: Colors.white,
+                          onTap: () {},
                         ),
                       ),
                     ],
