@@ -39,13 +39,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
           "Name": name,
           "Email": email,
           "Score": 0,
-          "Phone Number": null,
+          "Phone Number": "000 000000",
           "Date of Birth": "Select",
+          "Profile Pic":
+              "https://firebasestorage.googleapis.com/v0/b/quizapp-x-flutter.appspot.com/o/defaultProfilePic%2FdefaultProfilePic.png?alt=media&token=c65b9636-04f4-4a19-aa19-67a9629a6ee5",
         };
         try {
           await _firestore.collection("users").doc(email).set(userData);
           if (context.mounted) {
-            Navigator.pushNamed(context, TopicScreen.id);
+            Navigator.popUntil(context, (route) => route.isFirst);
+            Navigator.pushReplacementNamed(context, TopicScreen.id);
           }
           setState(() {
             _emailController.clear();

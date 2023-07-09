@@ -1,8 +1,10 @@
 import 'dart:developer';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_app/screens/profile/profile.dart';
 import 'package:quiz_app/screens/topic/components/subject_icon_tile.dart';
-import '../../chat_api/chat_api.dart';
+// import '../../chat_api/chat_api.dart';
 import '../../data/topics.dart';
 import '../error_screen.dart';
 import '../loading_screen.dart';
@@ -45,17 +47,29 @@ class _TopicScreenState extends State<TopicScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, ProfileScreen.id);
+                  StreamBuilder<DocumentSnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection("users")
+                        .doc(FirebaseAuth.instance.currentUser?.email)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      return Hero(
+                        tag: "profilePic",
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, ProfileScreen.id);
+                          },
+                          child: CircleAvatar(
+                            radius: 20,
+                            backgroundColor: Colors.grey.shade300,
+                            backgroundImage: (snapshot.data != null)
+                                ? NetworkImage(
+                                    snapshot.data?.get("Profile Pic"))
+                                : null,
+                          ),
+                        ),
+                      );
                     },
-                    child: Hero(
-                      tag: "profile_pic",
-                      child: CircleAvatar(
-                        radius: 20,
-                        backgroundColor: Colors.grey.shade300,
-                      ),
-                    ),
                   ),
                   const Expanded(
                     flex: 1,

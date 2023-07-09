@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_app/screens/topic/topic_screen.dart';
+import '../../components/custom_snack_bar_content.dart';
 import '../components/already_have_an_account_check.dart';
 import '../components/rounded_button.dart';
 import '../components/rounded_input_field.dart';
@@ -43,6 +44,18 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     } on FirebaseAuthException catch (e) {
       log(e.code.toString());
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          content: CustomSnackBarContent(
+            error: 'Login Error',
+            explanation: e.code.toString(),
+          ),
+          behavior: SnackBarBehavior.floating,
+          duration: const Duration(seconds: 3),
+        ),
+      );
     }
   }
 

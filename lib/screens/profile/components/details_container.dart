@@ -5,13 +5,14 @@ import 'date_field_row.dart';
 import 'detail_field_row.dart';
 
 class DetailsContainer extends StatelessWidget {
-  const DetailsContainer({super.key});
+  final String phoneNumber;
+  final String date;
+  const DetailsContainer(
+      {super.key, required this.phoneNumber, required this.date});
 
   @override
   Widget build(BuildContext context) {
     String? email = FirebaseAuth.instance.currentUser?.email;
-    String phoneNumber = "9773868085";
-    String date = "04.04.2001";
 
     return ElevatedContainer(
       padding: const EdgeInsets.all(20),

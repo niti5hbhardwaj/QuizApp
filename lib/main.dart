@@ -31,10 +31,10 @@ class QuizApp extends StatelessWidget {
       theme: ThemeData.light(),
       title: "QuizApp",
       debugShowCheckedModeBanner: false,
-      // initialRoute: (FirebaseAuth.instance.currentUser != null)
-      //     ? TopicScreen.id
-      //     : LoginScreen.id,
-      initialRoute: LoginScreen.id,
+      initialRoute: (FirebaseAuth.instance.currentUser != null)
+          ? TopicScreen.id
+          : LoginScreen.id,
+      // initialRoute: ProfileScreen.id,
       routes: {
         WelcomeScreen.id: (context) => const WelcomeScreen(),
         LoginScreen.id: (context) => const LoginScreen(),

@@ -1,14 +1,12 @@
-import 'dart:developer';
-import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:quiz_app/screens/profile/components/elevated_container.dart';
 import 'package:quiz_app/screens/profile/components/logout_button.dart';
-import 'package:quiz_app/screens/welcome/login/login_screen.dart';
 import 'components/actionable_icon_button.dart';
 import 'components/details_container.dart';
 import 'components/my_appbar.dart';
+import 'components/util_functions.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const id = 'profile';
@@ -19,29 +17,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  String name = "Default";
-  late String score = "null";
-  File? profilePic;
-
-  void pickImage() async {
-    XFile? pickedXFileImage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (pickedXFileImage != null) {
-      File imageFile = File(pickedXFileImage.path);
-      setState(() {
-        profilePic = imageFile;
-      });
-    } else {
-      log("No file selected");
-    }
-  }
-
-  void deleteAccount() async {
-    await FirebaseAuth.instance.currentUser?.delete();
-    if (context.mounted) {
-      Navigator.pushReplacementNamed(context, LoginScreen.id);
-    }
-  }
+  String? docId = FirebaseAuth.instance.currentUser?.email;
 
   @override
   Widget build(BuildContext context) {
@@ -56,116 +32,140 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           Expanded(
             flex: 7,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Hero(
-                  tag: "profile_pic",
-                  child: GestureDetector(
-                    onTap: pickImage,
-                    child: CircleAvatar(
-                      backgroundColor: Colors.grey.shade300,
-                      radius: 75,
-                      backgroundImage:
-                          (profilePic != null) ? FileImage(profilePic!) : null,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  name,
-                  style: TextStyle(
-                    color: Colors.blueGrey.shade800,
-                    fontSize: 30,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Score:",
-                      style: TextStyle(
-                        color: Colors.blueGrey.shade900,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Text(
-                      score,
-                      style: TextStyle(
-                        color: Colors.blueGrey.shade900,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const Column(
-                        children: [
-                          Text(
-                            "User Details",
-                            style: TextStyle(
-                              fontSize: 15,
-                            ),
-                            textAlign: TextAlign.center,
+            child: StreamBuilder<DocumentSnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection("users")
+                  .doc(docId)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.active) {
+                  if (snapshot.hasData && snapshot.data != null) {
+                    String name = snapshot.data?.get("Name");
+                    String score = snapshot.data!.get("Score").toString();
+                    String phoneNumber = snapshot.data!.get("Phone Number");
+                    String date = snapshot.data!.get("Date of Birth");
+                    String profilePic = snapshot.data!.get("Profile Pic");
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Hero(
+                          tag: "profilePic",
+                          child: GestureDetector(
+                            onTap: updateImage,
+                            child: CircleAvatar(
+                                backgroundColor: Colors.grey.shade300,
+                                radius: 75,
+                                backgroundImage: NetworkImage(profilePic)),
                           ),
-                          DetailsContainer(),
-                        ],
-                      ),
-                      ElevatedContainer(
-                        padding: const EdgeInsets.all(15),
-                        child: Column(
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          name,
+                          style: TextStyle(
+                            color: Colors.blueGrey.shade800,
+                            fontSize: 30,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            ActionableIconButton(
-                              icon: Icons.lock_outline_rounded,
-                              text: "Change Password",
-                              iconBackgroundColor: Colors.blueGrey.shade900,
-                              iconColor: Colors.white,
-                              onTap: () {},
+                            Text(
+                              "Score:",
+                              style: TextStyle(
+                                color: Colors.blueGrey.shade900,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                            const Divider(
-                              height: 20,
-                              thickness: 1,
-                            ),
-                            ActionableIconButton(
-                              icon: Icons.delete_forever_outlined,
-                              text: "Delete Account",
-                              iconBackgroundColor: Colors.blueGrey.shade900,
-                              iconColor: Colors.white,
-                              onTap: deleteAccount,
+                            Text(
+                              score,
+                              style: TextStyle(
+                                color: Colors.blueGrey.shade900,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ],
                         ),
-                      ),
-                      ElevatedContainer(
-                        padding: const EdgeInsets.all(15),
-                        child: ActionableIconButton(
-                          icon: Icons.info_outline,
-                          text: "About the app",
-                          iconBackgroundColor: Colors.blueGrey.shade900,
-                          iconColor: Colors.white,
-                          onTap: () {},
+                        const SizedBox(
+                          height: 20,
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                const LogoutButton(),
-              ],
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Column(
+                                children: [
+                                  DetailsContainer(
+                                    phoneNumber: phoneNumber,
+                                    date: date,
+                                  ),
+                                ],
+                              ),
+                              ElevatedContainer(
+                                padding: const EdgeInsets.all(15),
+                                child: Column(
+                                  children: [
+                                    ActionableIconButton(
+                                      icon: Icons.lock_outline_rounded,
+                                      text: "Change Password",
+                                      iconBackgroundColor:
+                                          Colors.blueGrey.shade900,
+                                      iconColor: Colors.white,
+                                      onTap: () {
+                                        changePassword(context);
+                                      },
+                                    ),
+                                    const Divider(
+                                      height: 20,
+                                      thickness: 1,
+                                    ),
+                                    ActionableIconButton(
+                                      icon: Icons.delete_forever_outlined,
+                                      text: "Delete Account",
+                                      iconBackgroundColor:
+                                          Colors.blueGrey.shade900,
+                                      iconColor: Colors.white,
+                                      onTap: () {
+                                        openDialog(context);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              ElevatedContainer(
+                                padding: const EdgeInsets.all(15),
+                                child: ActionableIconButton(
+                                  icon: Icons.info_outline,
+                                  text: "About the app",
+                                  iconBackgroundColor: Colors.blueGrey.shade900,
+                                  iconColor: Colors.white,
+                                  onTap: () {},
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const LogoutButton(),
+                      ],
+                    );
+                  }
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              },
             ),
           ),
         ],

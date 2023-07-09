@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'inplace_text_editor.dart';
 
@@ -20,13 +22,17 @@ class _DetailFieldRowState extends State<DetailFieldRow> {
   bool editing = false;
   final TextEditingController _controller = TextEditingController();
 
-  void submitPhoneNumber(String value) {
+  void submitPhoneNumber(String value) async {
+    //TODO: error handling
     if (value.length != 10) {
       print("error: not 10 digits");
     } else {
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(FirebaseAuth.instance.currentUser?.email)
+          .update({"Phone Number": value});
       setState(() {
         editing = false;
-        widget.fieldData = value;
       });
     }
   }

@@ -1,10 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class DateFieldRow extends StatefulWidget {
   final String fieldName;
-  late String fieldData;
+  final String fieldData;
   final bool editable;
-  DateFieldRow({
+  const DateFieldRow({
     super.key,
     required this.fieldName,
     required this.fieldData,
@@ -34,9 +36,11 @@ class _DateFieldRowState extends State<DateFieldRow> {
         month = "0$month";
       }
       String formattedDate = "$date.$month.$year";
-      setState(() {
-        widget.fieldData = formattedDate;
-      });
+      //TODO: error handling
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(FirebaseAuth.instance.currentUser?.email)
+          .update({"Date of Birth": formattedDate});
     } else {
       print("No date selected");
     }
