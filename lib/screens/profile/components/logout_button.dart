@@ -1,6 +1,7 @@
+import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import '../../components/custom_snack_bar_content.dart';
 import '../../welcome/login/login_screen.dart';
 
 class LogoutButton extends StatelessWidget {
@@ -9,7 +10,21 @@ class LogoutButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void logout() async {
-      await FirebaseAuth.instance.signOut();
+      await FirebaseAuth.instance.signOut().catchError((e) {
+        log("First Error: ${e.toString()}");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            content: CustomSnackBarContent(
+              error: 'Logout Error',
+              explanation: e.toString(),
+            ),
+            behavior: SnackBarBehavior.floating,
+            duration: const Duration(seconds: 3),
+          ),
+        );
+      });
       if (context.mounted) {
         Navigator.pushReplacementNamed(context, LoginScreen.id);
       }

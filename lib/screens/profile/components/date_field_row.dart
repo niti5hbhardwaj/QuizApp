@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../../components/custom_snack_bar_content.dart';
 
 class DateFieldRow extends StatefulWidget {
   final String fieldName;
@@ -36,13 +40,26 @@ class _DateFieldRowState extends State<DateFieldRow> {
         month = "0$month";
       }
       String formattedDate = "$date.$month.$year";
-      //TODO: error handling
       await FirebaseFirestore.instance
           .collection("users")
           .doc(FirebaseAuth.instance.currentUser?.email)
-          .update({"Date of Birth": formattedDate});
+          .update({"Date of Birth": formattedDate}).catchError((e) {
+        log("Error while updating DOB");
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            content: CustomSnackBarContent(
+              error: 'Update error',
+              explanation: "error while updating the date of birth",
+            ),
+            behavior: SnackBarBehavior.floating,
+            duration: Duration(seconds: 3),
+          ),
+        );
+      });
     } else {
-      print("No date selected");
+      log("No date selected");
     }
   }
 

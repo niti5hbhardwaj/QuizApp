@@ -1,13 +1,15 @@
+import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../../components/custom_snack_bar_content.dart';
 import 'inplace_text_editor.dart';
 
 class DetailFieldRow extends StatefulWidget {
   final String fieldName;
-  late String fieldData;
+  final String fieldData;
   final bool editable;
-  DetailFieldRow({
+  const DetailFieldRow({
     super.key,
     required this.fieldName,
     required this.fieldData,
@@ -23,14 +25,39 @@ class _DetailFieldRowState extends State<DetailFieldRow> {
   final TextEditingController _controller = TextEditingController();
 
   void submitPhoneNumber(String value) async {
-    //TODO: error handling
     if (value.length != 10) {
-      print("error: not 10 digits");
+      log("Invalid Phone Number");
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          content: CustomSnackBarContent(
+            error: 'Invalid Phone Number',
+            explanation: "Entered number is not a valid phone number",
+          ),
+          behavior: SnackBarBehavior.floating,
+          duration: Duration(seconds: 3),
+        ),
+      );
     } else {
       await FirebaseFirestore.instance
           .collection("users")
           .doc(FirebaseAuth.instance.currentUser?.email)
-          .update({"Phone Number": value});
+          .update({"Phone Number": value}).catchError((e) {
+        log("Invalid Phone Number");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            content: CustomSnackBarContent(
+              error: 'Update error',
+              explanation: e.toString(),
+            ),
+            behavior: SnackBarBehavior.floating,
+            duration: const Duration(seconds: 3),
+          ),
+        );
+      });
       setState(() {
         editing = false;
       });

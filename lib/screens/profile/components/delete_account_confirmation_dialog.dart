@@ -34,7 +34,7 @@ class DeleteAccountConfirmationDialog extends StatelessWidget {
         ),
       ),
       actionsAlignment: MainAxisAlignment.spaceEvenly,
-      actionsPadding: EdgeInsets.all(15),
+      actionsPadding: const EdgeInsets.all(15),
       actions: [
         MaterialButton(
           color: Colors.white,

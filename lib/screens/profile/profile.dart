@@ -17,10 +17,9 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  String? docId = FirebaseAuth.instance.currentUser?.email;
-
   @override
   Widget build(BuildContext context) {
+    String? docId = FirebaseAuth.instance.currentUser?.email;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey.shade100,
@@ -51,7 +50,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Hero(
                           tag: "profilePic",
                           child: GestureDetector(
-                            onTap: updateImage,
+                            onTap: () {
+                              updateImage(context);
+                            },
                             child: CircleAvatar(
                                 backgroundColor: Colors.grey.shade300,
                                 radius: 75,
@@ -75,6 +76,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            //TODO: implement score update after quiz
                             Text(
                               "Score:",
                               style: TextStyle(
