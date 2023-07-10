@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../components/already_have_an_account_check.dart';
 import '../components/rounded_button.dart';
 import '../components/rounded_input_field.dart';
@@ -21,16 +22,23 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool loading = false;
 
   void handleLogin() async {
     String email = _emailController.text.trim();
     String password = _passwordController.text.trim();
+    setState(() {
+      loading = true;
+    });
     if (await login(context, email, password)) {
       setState(() {
         _emailController.clear();
         _passwordController.clear();
       });
     }
+    setState(() {
+      loading = false;
+    });
   }
 
   @override
@@ -64,18 +72,46 @@ class _LoginScreenState extends State<LoginScreen> {
                 hintText: 'Email',
                 iconColor: primaryColor,
                 containerColor: secondaryColor,
+                readOnly: loading,
               ),
               RoundedPasswordField(
                 controller: _passwordController,
                 containerColor: secondaryColor,
                 iconColor: primaryColor,
+                readOnly: loading,
               ),
-              RoundedButton(
-                  text: 'LOGIN',
-                  onPressed: () {
-                    handleLogin();
-                  },
-                  buttonColor: primaryColor),
+              (!loading)
+                  ? RoundedButton(
+                      text: 'LOGIN',
+                      onPressed: () {
+                        handleLogin();
+                      },
+                      buttonColor: primaryColor,
+                    )
+                  : Container(
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      width: size.width * 0.4,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(29),
+                        child: TextButton(
+                          style: const ButtonStyle(
+                            overlayColor:
+                                MaterialStatePropertyAll(Colors.transparent),
+                            padding: MaterialStatePropertyAll(
+                              EdgeInsets.symmetric(
+                                  vertical: 19, horizontal: 40),
+                            ),
+                            backgroundColor:
+                                MaterialStatePropertyAll(Colors.deepPurple),
+                          ),
+                          onPressed: () {},
+                          child: const SpinKitThreeBounce(
+                            size: 19,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
               SizedBox(height: size.height * 0.03),
               AlreadyHaveAnAccountCheck(
                 onLoginPage: true,

@@ -41,7 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         iconBackgroundColor: Colors.blueGrey.shade900,
                         iconColor: Colors.white,
                         onTap: () {
-                          changePassword(context);
+                          openChangePasswordDialog(context);
                         },
                       ),
                       const Divider(

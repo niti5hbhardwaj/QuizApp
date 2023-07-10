@@ -6,7 +6,12 @@ import '../../../topic/topic_screen.dart';
 Future<bool> login(context, email, password) async {
   try {
     UserCredential userCredential = await FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: email, password: password);
+        .signInWithEmailAndPassword(email: email, password: password)
+        .timeout(
+          const Duration(
+            seconds: 10,
+          ),
+        );
     if (userCredential.user != null) {
       if (context.mounted) {
         Navigator.pushNamedAndRemoveUntil(
@@ -19,6 +24,13 @@ Future<bool> login(context, email, password) async {
       context: context,
       heading: "Login Error",
       text: e.code.toString(),
+    );
+    return false;
+  } catch (e) {
+    logAndShowSnackbar(
+      context: context,
+      heading: "Login Error",
+      text: e.toString(),
     );
     return false;
   }

@@ -17,41 +17,41 @@ class ActionableIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        GestureDetector(
-          onTap: onTap,
-          child: Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: iconBackgroundColor,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Icon(
-                  icon,
-                  color: iconColor,
-                  size: 20,
-                ),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        color: Colors.white,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: iconBackgroundColor,
+                borderRadius: BorderRadius.circular(10),
               ),
-              const SizedBox(
-                width: 15,
+              child: Icon(
+                icon,
+                color: iconColor,
+                size: 20,
               ),
-              Text(
-                text,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.blueGrey.shade900,
-                ),
+            ),
+            const SizedBox(
+              width: 15,
+            ),
+            Text(
+              text,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: Colors.blueGrey.shade900,
               ),
-            ],
-          ),
+            ),
+            const Spacer(),
+            const Icon(Icons.chevron_right),
+          ],
         ),
-        const Icon(Icons.chevron_right),
-      ],
+      ),
     );
   }
 }

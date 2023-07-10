@@ -22,6 +22,7 @@ class RoundedButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(29),
         child: TextButton(
           style: ButtonStyle(
+            overlayColor: const MaterialStatePropertyAll(Colors.transparent),
             padding: const MaterialStatePropertyAll(
               EdgeInsets.symmetric(vertical: 19, horizontal: 40),
             ),

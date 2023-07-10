@@ -35,14 +35,36 @@ class _UserDetailsState extends State<UserDetails> {
                 children: [
                   Hero(
                     tag: "profilePic",
-                    child: GestureDetector(
-                      onTap: () {
-                        updateImage(context);
-                      },
-                      child: CircleAvatar(
+                    child: Stack(
+                      children: [
+                        CircleAvatar(
                           backgroundColor: Colors.grey.shade300,
                           radius: 75,
-                          backgroundImage: NetworkImage(profilePic)),
+                          backgroundImage: NetworkImage(profilePic),
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: GestureDetector(
+                            onTap: () {
+                              updateImage(context);
+                            },
+                            child: Container(
+                              height: 35,
+                              width: 35,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Icon(
+                                Icons.add_a_photo_outlined,
+                                size: 20,
+                                color: Colors.blueGrey.shade900,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(

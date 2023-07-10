@@ -34,7 +34,7 @@ class QuizApp extends StatelessWidget {
       initialRoute: (FirebaseAuth.instance.currentUser != null)
           ? TopicScreen.id
           : LoginScreen.id,
-      // initialRoute: ProfileScreen.id,
+      // initialRoute: TopicScreen.id,
       routes: {
         WelcomeScreen.id: (context) => const WelcomeScreen(),
         LoginScreen.id: (context) => const LoginScreen(),

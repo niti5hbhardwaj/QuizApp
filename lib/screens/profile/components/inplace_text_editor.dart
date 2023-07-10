@@ -13,7 +13,10 @@ class InPlaceTextEditor extends StatelessWidget {
       width: 115,
       height: 20,
       child: TextField(
-        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+        inputFormatters: <TextInputFormatter>[
+          FilteringTextInputFormatter.digitsOnly,
+          LengthLimitingTextInputFormatter(10),
+        ],
         keyboardType: TextInputType.number,
         controller: controller,
         autofocus: true,

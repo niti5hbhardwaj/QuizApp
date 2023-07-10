@@ -60,7 +60,7 @@ void updateImage(context) async {
   }
 }
 
-void deleteAccount(BuildContext context, String password) async {
+Future<bool> deleteAccount(BuildContext context, String password) async {
   if (password != "") {
     AuthCredential credential =
         EmailAuthProvider.credential(email: getEmail(), password: password);
@@ -82,7 +82,9 @@ void deleteAccount(BuildContext context, String password) async {
             Navigator.pushNamedAndRemoveUntil(
                 context, LoginScreen.id, (route) => false);
           }
+          return true;
         }
+        return false;
       } else {
         if (context.mounted) {
           logAndShowSnackbar(
@@ -92,6 +94,7 @@ void deleteAccount(BuildContext context, String password) async {
             color: failure,
           );
         }
+        return false;
       }
     } on FirebaseAuthException catch (e) {
       logAndShowSnackbar(
@@ -100,6 +103,7 @@ void deleteAccount(BuildContext context, String password) async {
         text: e.code.toString(),
         color: failure,
       );
+      return false;
     }
   } else {
     logAndShowSnackbar(
@@ -108,6 +112,7 @@ void deleteAccount(BuildContext context, String password) async {
       text: "Password field cannot be left empty",
       color: failure,
     );
+    return false;
   }
 }
 
@@ -122,9 +127,13 @@ String getEmail() {
   return (email == null) ? "N.A." : email;
 }
 
-Future changePassword(context) async {
-  List<String>? passwords = await showDialog(
-      context: context, builder: (context) => ChangePasswordDialog());
+Future openChangePasswordDialog(context) {
+  return showDialog(
+      context: context, builder: (context) => const ChangePasswordDialog());
+}
+
+Future<bool> changePassword(
+    BuildContext context, List<String>? passwords) async {
   if (passwords != null) {
     AuthCredential credential =
         EmailAuthProvider.credential(email: getEmail(), password: passwords[0]);
@@ -146,22 +155,30 @@ Future changePassword(context) async {
             successful = false;
           });
           if (successful) {
-            logAndShowSnackbar(
-              context: context,
-              heading: 'Password Change Successful',
-              text: "Your password has been changed successfully.",
-              color: success,
-            );
+            if (context.mounted) {
+              logAndShowSnackbar(
+                context: context,
+                heading: 'Password Change Successful',
+                text: "Your password has been changed successfully.",
+                color: success,
+              );
+              return true;
+            }
+            return true;
           }
         } else {
-          logAndShowSnackbar(
-            context: context,
-            heading: 'Password change unsuccessful',
-            text: "new password cannot be the same as old password",
-            color: failure,
-          );
+          if (context.mounted) {
+            logAndShowSnackbar(
+              context: context,
+              heading: 'Password change unsuccessful',
+              text: "new password cannot be the same as old password",
+              color: failure,
+            );
+          }
+          return false;
         }
       }
+      return false;
     } on FirebaseAuthException catch (e) {
       logAndShowSnackbar(
         context: context,
@@ -171,6 +188,7 @@ Future changePassword(context) async {
       );
     }
   }
+  return false;
 }
 
 Future<bool> changePhoneNumber(BuildContext context, String value) async {
@@ -265,6 +283,7 @@ void logout(context) async {
         context: context, heading: "Logout Error", text: e.toString());
   });
   if (successful && context.mounted) {
-    Navigator.pushReplacementNamed(context, LoginScreen.id);
+    Navigator.pushNamedAndRemoveUntil(
+        context, LoginScreen.id, (route) => false);
   }
 }

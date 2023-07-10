@@ -5,12 +5,16 @@ class RoundedPasswordField extends StatefulWidget {
   final Color iconColor, containerColor;
   final ValueChanged<String>? onChanged;
   final TextEditingController? controller;
+  final bool readOnly;
+  final String hintText;
   const RoundedPasswordField({
     super.key,
     this.onChanged,
     this.iconColor = Colors.grey,
     this.containerColor = Colors.white,
     this.controller,
+    this.readOnly = false,
+    this.hintText = "Password",
   });
 
   @override
@@ -42,6 +46,7 @@ class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
     return TextFieldContainer(
       color: widget.containerColor,
       child: TextField(
+        readOnly: widget.readOnly,
         controller: widget.controller,
         textAlignVertical: TextAlignVertical.center,
         obscureText: hidden,
@@ -51,7 +56,7 @@ class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
             Icons.lock,
             color: widget.iconColor,
           ),
-          hintText: "Password",
+          hintText: widget.hintText,
           border: InputBorder.none,
           suffixIcon: GestureDetector(
             onTap: showPasswordForSometime,

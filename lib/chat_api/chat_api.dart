@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import '../data/question_bank.dart';
 import 'package:http/http.dart' as http;
 import 'api_key.dart';
@@ -31,7 +32,7 @@ Future<bool> getQuestions(String topic) async {
     sampleData.replaceRange(0, sampleData.length, questionData);
     return true;
   } catch (e) {
-    print(e);
+    log(e.toString());
     return false;
   }
 }
