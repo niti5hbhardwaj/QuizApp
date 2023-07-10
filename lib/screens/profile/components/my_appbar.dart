@@ -12,7 +12,7 @@ class MyAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      flex: 1,
+      flex: 11,
       child: Padding(
         padding: const EdgeInsets.only(top: 16, bottom: 16, left: 20, right: 8),
         child: Row(

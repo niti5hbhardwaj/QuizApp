@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:quiz_app/screens/score/util_functions.dart';
 import 'package:quiz_app/screens/summary.dart';
 import 'package:quiz_app/screens/topic/topic_screen.dart';
 
@@ -16,6 +17,7 @@ class ScoreScreen extends StatelessWidget {
         ModalRoute.of(context)?.settings.arguments as Map<String, int>;
     int? score = arguments["score"];
     int? numberOfQuestions = arguments["total_questions"];
+    updateScore(score!);
     return Scaffold(
       backgroundColor: backgroundColor,
       body: Center(

@@ -1,14 +1,11 @@
-import 'dart:developer';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:quiz_app/screens/topic/topic_screen.dart';
-import '../../components/custom_snack_bar_content.dart';
 import '../components/already_have_an_account_check.dart';
 import '../components/rounded_button.dart';
 import '../components/rounded_input_field.dart';
 import '../components/rounded_password_field.dart';
 import '../signup/signup_screen.dart';
 import 'components/background.dart';
+import 'components/util_functions.dart';
 
 const Color primaryColor = Color.fromARGB(255, 106, 27, 154);
 const Color secondaryColor = Color.fromARGB(255, 231, 220, 248);
@@ -25,37 +22,14 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  void login() async {
+  void handleLogin() async {
     String email = _emailController.text.trim();
     String password = _passwordController.text.trim();
-
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-      if (userCredential.user != null) {
-        if (context.mounted) {
-          Navigator.popUntil(context, (route) => false);
-          Navigator.pushNamed(context, TopicScreen.id);
-        }
-        setState(() {
-          _emailController.clear();
-          _passwordController.clear();
-        });
-      }
-    } on FirebaseAuthException catch (e) {
-      log(e.code.toString());
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          content: CustomSnackBarContent(
-            error: 'Login Error',
-            explanation: e.code.toString(),
-          ),
-          behavior: SnackBarBehavior.floating,
-          duration: const Duration(seconds: 3),
-        ),
-      );
+    if (await login(context, email, password)) {
+      setState(() {
+        _emailController.clear();
+        _passwordController.clear();
+      });
     }
   }
 
@@ -99,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
               RoundedButton(
                   text: 'LOGIN',
                   onPressed: () {
-                    login();
+                    handleLogin();
                   },
                   buttonColor: primaryColor),
               SizedBox(height: size.height * 0.03),

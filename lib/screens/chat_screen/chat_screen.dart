@@ -21,8 +21,22 @@ class _ChatScreenState extends State<ChatScreen> {
       messages.insert(0, Message(messageText: messageText, sender: sender));
       _messageController.clear();
     });
+
+    await Future.delayed(const Duration(milliseconds: 900), () {
+      setState(() {
+        messages.insert(
+          0,
+          Message(
+            messageText: "typing...",
+            sender: Sender.chatGPT,
+          ),
+        );
+      });
+    });
+
     String reply = await getResponse("Using 100 words or less: $messageText");
     setState(() {
+      messages.removeAt(0);
       messages.insert(0, Message(messageText: reply, sender: Sender.chatGPT));
     });
   }
@@ -37,9 +51,23 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
       );
     });
+
+    await Future.delayed(const Duration(milliseconds: 900), () {
+      setState(() {
+        messages.insert(
+          0,
+          Message(
+            messageText: "typing...",
+            sender: Sender.chatGPT,
+          ),
+        );
+      });
+    });
+
     String reply = await getResponse(
         "I have a doubt. Can you explain the answer for: $questionText");
     setState(() {
+      messages.removeAt(0);
       messages.insert(0, Message(messageText: reply, sender: Sender.chatGPT));
     });
   }

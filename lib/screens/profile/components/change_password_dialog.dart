@@ -41,6 +41,7 @@ class ChangePasswordDialog extends StatelessWidget {
             ),
             child: TextField(
               controller: _currentPasswordController,
+              obscureText: true,
               autofocus: true,
               onChanged: (value) {},
               textAlign: TextAlign.center,
@@ -61,6 +62,7 @@ class ChangePasswordDialog extends StatelessWidget {
             ),
             child: TextField(
               controller: _newPasswordController,
+              obscureText: true,
               onChanged: (value) {},
               textAlign: TextAlign.center,
               decoration: const InputDecoration(

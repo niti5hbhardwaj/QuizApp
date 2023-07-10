@@ -1,10 +1,5 @@
-import 'dart:developer';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import '../../components/custom_snack_bar_content.dart';
+import 'package:quiz_app/screens/profile/components/util_functions.dart';
 
 class DateFieldRow extends StatefulWidget {
   final String fieldName;
@@ -22,47 +17,6 @@ class DateFieldRow extends StatefulWidget {
 }
 
 class _DateFieldRowState extends State<DateFieldRow> {
-  void getNewDate() async {
-    DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-    );
-    if (pickedDate != null) {
-      String date = pickedDate.day.toString();
-      String month = pickedDate.month.toString();
-      String year = pickedDate.year.toString();
-      if (date.length == 1) {
-        date = "0$date";
-      }
-      if (month.length == 1) {
-        month = "0$month";
-      }
-      String formattedDate = "$date.$month.$year";
-      await FirebaseFirestore.instance
-          .collection("users")
-          .doc(FirebaseAuth.instance.currentUser?.email)
-          .update({"Date of Birth": formattedDate}).catchError((e) {
-        log("Error while updating DOB");
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            content: CustomSnackBarContent(
-              error: 'Update error',
-              explanation: "error while updating the date of birth",
-            ),
-            behavior: SnackBarBehavior.floating,
-            duration: Duration(seconds: 3),
-          ),
-        );
-      });
-    } else {
-      log("No date selected");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -83,7 +37,9 @@ class _DateFieldRowState extends State<DateFieldRow> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             GestureDetector(
-              onTap: getNewDate,
+              onTap: () {
+                getNewDate(context);
+              },
               child: Text(
                 widget.fieldData,
                 style: TextStyle(
