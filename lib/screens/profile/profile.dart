@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/screens/About/about_the_app.dart';
 import 'package:quiz_app/screens/profile/components/elevated_container.dart';
 import 'package:quiz_app/screens/profile/components/logout_button.dart';
 import 'components/actionable_icon_button.dart';
@@ -60,7 +61,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ],
                   ),
                 ),
-                //TODO: create a page
                 ElevatedContainer(
                   padding: const EdgeInsets.all(15),
                   child: ActionableIconButton(
@@ -68,7 +68,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     text: "About the app",
                     iconBackgroundColor: Colors.blueGrey.shade900,
                     iconColor: Colors.white,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, AboutTheApp.id);
+                    },
                   ),
                 ),
               ],

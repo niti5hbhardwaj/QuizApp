@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../chat_api/chat_api.dart';
+// import '../../chat_api/chat_api.dart';
+// import '../../chat_api/text_davinci.dart';
+import '../../chat_api/chat_with_context.dart';
 import '../../models/message.dart';
 import 'message_bubble.dart';
 
@@ -13,7 +15,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _messageController = TextEditingController();
-
+  ChatGPT chatGPT = ChatGPT();
   List<Message> messages = [];
 
   void insertMessage(String messageText, Sender sender) async {
@@ -33,11 +35,11 @@ class _ChatScreenState extends State<ChatScreen> {
         );
       });
     });
-
-    String reply = await getResponse("Using 100 words or less: $messageText");
+    String reply = await chatGPT.getResponse(messageText);
     setState(() {
       messages.removeAt(0);
-      messages.insert(0, Message(messageText: reply, sender: Sender.chatGPT));
+      messages.insert(
+          0, Message(messageText: reply.trim(), sender: Sender.chatGPT));
     });
   }
 
@@ -64,7 +66,7 @@ class _ChatScreenState extends State<ChatScreen> {
       });
     });
 
-    String reply = await getResponse(
+    String reply = await chatGPT.getResponse(
         "I have a doubt. Can you explain the answer for: $questionText");
     setState(() {
       messages.removeAt(0);

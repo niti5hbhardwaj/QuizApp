@@ -1,9 +1,11 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:quiz_app/screens/error/network_error_screen.dart';
 import 'package:quiz_app/screens/topic/components/subject_icon_tile.dart';
 // import '../../chat_api/chat_api.dart';
+// import '../../chat_api/text_davinci.dart';
 import '../../data/topics.dart';
-import '../error_screen.dart';
+import '../error/lost_in_space.dart';
 import '../loading_screen.dart';
 import '../quiz_screen.dart';
 import 'components/topic_screen_profile_pic.dart';
@@ -18,17 +20,17 @@ class TopicScreen extends StatefulWidget {
 
 class _TopicScreenState extends State<TopicScreen> {
   void startQuiz(context, index) async {
-    bool success;
+    String errorType;
     Navigator.pushNamed(context, LoadingScreen.id);
-    //TODO: implement error handling
-    success = await getQuestions(topicList[index].topicName);
-    if (context.mounted) {
-      Navigator.of(context).pop();
-    }
-    if (success && context.mounted) {
+    errorType = await getQuestions(topicList[index].topicName);
+    if (errorType == "none" && context.mounted) {
       Navigator.pushReplacementNamed(context, QuizScreen.id);
     } else {
-      Navigator.pushReplacementNamed(context, BrokenLinkScreen.id);
+      if (errorType == "timeout") {
+        Navigator.pushReplacementNamed(context, NetworkErrorScreen.id);
+      } else if (errorType == "unknown") {
+        Navigator.pushReplacementNamed(context, LostInSpace.id);
+      }
     }
   }
 
@@ -93,10 +95,9 @@ class _TopicScreenState extends State<TopicScreen> {
   }
 }
 
-Future<bool> getQuestions(String topic) async {
+Future<String> getQuestions(String topic) async {
   await Future.delayed(const Duration(seconds: 1, milliseconds: 800), () {
-    log("Hello");
-    return true;
+    return "none";
   });
-  return true;
+  return "none";
 }

@@ -7,7 +7,7 @@ class QuizBrain {
   static List<Question> questions = [];
 
   QuizBrain() {
-    questions = sampleData
+    questions = questionBank
         .map((question) => Question(
             id: question["id"],
             questionText: question["question_text"],

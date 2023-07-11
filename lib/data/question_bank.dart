@@ -1,4 +1,4 @@
-List<Map<String, dynamic>> sampleData = [
+List<Map<String, dynamic>> questionBank = [
   {
     "id": 1,
     "question_text": "Which planet is known as the 'Red Planet'?",

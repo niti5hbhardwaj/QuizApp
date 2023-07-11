@@ -39,8 +39,26 @@ class _QuestionBodyState extends State<QuestionBody> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(
-            height: 25,
+          GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: SizedBox(
+              height: 81,
+              width: double.infinity,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 30.0),
+                    child: Icon(
+                      Icons.arrow_back_ios_new_rounded,
+                      color: Colors.blueGrey.shade900,
+                      size: 20,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40),

@@ -7,12 +7,10 @@ import 'api_key.dart';
 Future<String> getQuestions(String topic) async {
   String message =
       '5 $topic questions as a list of json with fields "id" as int, "question_text" as string, "options" as a list of strings, "answer_index" as int, "explanation" as string without any leading text';
-  Uri uri = Uri.parse("https://api.openai.com/v1/chat/completions");
+  Uri uri = Uri.parse("https://api.openai.com/v1/completions");
   Map<String, dynamic> body = {
-    "model": "gpt-3.5-turbo",
-    "messages": [
-      {"role": "user", "content": message},
-    ],
+    "model": "text-davinci-003",
+    "prompt": message,
     "max_tokens": 1000,
   };
   try {
@@ -29,7 +27,7 @@ Future<String> getQuestions(String topic) async {
     Map<String, dynamic> parsedResponse =
         json.decode(utf8.decode(response.bodyBytes));
     try {
-      final parsedJson = parsedResponse["choices"][0]["message"]["content"];
+      final parsedJson = parsedResponse["choices"][0]["text"];
       List<Map<String, dynamic>> questionData =
           List<Map<String, dynamic>>.from(json.decode(parsedJson));
       questionBank.replaceRange(0, questionBank.length, questionData);
@@ -46,12 +44,10 @@ Future<String> getQuestions(String topic) async {
 
 Future<String> getResponse(String messageText) async {
   String message = messageText;
-  Uri uri = Uri.parse("https://api.openai.com/v1/chat/completions");
+  Uri uri = Uri.parse("https://api.openai.com/v1/completions");
   Map<String, dynamic> body = {
-    "model": "gpt-3.5-turbo",
-    "messages": [
-      {"role": "user", "content": message},
-    ],
+    "model": "text-davinci-003",
+    "prompt": message,
     "max_tokens": 200,
   };
   try {
@@ -67,12 +63,10 @@ Future<String> getResponse(String messageText) async {
         .timeout(const Duration(seconds: 15));
     Map<String, dynamic> parsedResponse =
         json.decode(utf8.decode(response.bodyBytes));
-    final reply = parsedResponse["choices"][0]["message"]["content"];
+    final reply = parsedResponse["choices"][0]["text"].toString().trim();
     return reply;
   } catch (e) {
     log(e.toString());
     return "Encountered error while fetching the response";
   }
 }
-
-//TODO: clean up the mess here
