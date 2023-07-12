@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-// import '../../chat_api/chat_api.dart';
-// import '../../chat_api/text_davinci.dart';
-import '../../chat_api/chat_with_context.dart';
+import '../../chat_api/chat_gpt.dart';
 import '../../models/message.dart';
 import 'message_bubble.dart';
 

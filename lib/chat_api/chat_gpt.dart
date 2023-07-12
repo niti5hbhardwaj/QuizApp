@@ -1,18 +1,21 @@
 import 'dart:convert';
 import 'dart:developer';
-import '../data/question_bank.dart';
 import 'package:http/http.dart' as http;
+import '../data/question_bank.dart';
 import 'api_key.dart';
 
-class TextDavinci {
-  Uri uri = Uri.parse("https://api.openai.com/v1/completions");
+class ChatGPT {
+  final List<Map<String, String>> messages = [];
+  Uri uri = Uri.parse("https://api.openai.com/v1/chat/completions");
 
   Future<String> getQuestions(String topic) async {
     String message =
-        '5 $topic questions as a list of json with fields "id" as int, "question_text" as string, "options" as a list of strings, "answer_index" as int, "explanation" as string without any leading text.';
+        '5 $topic questions as a list of json with fields "id" as int, "question_text" as string, "options" as a list of strings, "answer_index" as int, "explanation" as string without any leading text';
     Map<String, dynamic> body = {
-      "model": "text-davinci-003",
-      "prompt": message,
+      "model": "gpt-3.5-turbo",
+      "messages": [
+        {"role": "user", "content": message},
+      ],
     };
     try {
       final response = await http.post(
@@ -23,11 +26,12 @@ class TextDavinci {
         },
         body: json.encode(body),
       );
+      // .timeout(const Duration(seconds: 60));
       if (response.statusCode == 200) {
         Map<String, dynamic> parsedResponse =
             json.decode(utf8.decode(response.bodyBytes));
         try {
-          final parsedJson = parsedResponse["choices"][0]["text"];
+          final parsedJson = parsedResponse["choices"][0]["message"]["content"];
           List<Map<String, dynamic>> questionData =
               List<Map<String, dynamic>>.from(json.decode(parsedJson));
           questionBank.replaceRange(0, questionBank.length, questionData);
@@ -47,6 +51,10 @@ class TextDavinci {
   }
 
   Future<String> getResponse(String messageText) async {
+    messages.add({
+      'role': 'user',
+      'content': messageText,
+    });
     try {
       final response = await http
           .post(
@@ -56,8 +64,8 @@ class TextDavinci {
               "Authorization": "Bearer $apiKey"
             },
             body: json.encode({
-              "model": "text-davinci-003",
-              "prompt": messageText,
+              "model": "gpt-3.5-turbo",
+              "messages": messages,
             }),
           )
           .timeout(const Duration(seconds: 30));
@@ -65,7 +73,11 @@ class TextDavinci {
       if (response.statusCode == 200) {
         Map<String, dynamic> parsedResponse =
             json.decode(utf8.decode(response.bodyBytes));
-        final reply = parsedResponse["choices"][0]["text"].toString().trim();
+        final reply = parsedResponse["choices"][0]["message"]["content"];
+        messages.add({
+          'role': 'assistant',
+          'content': reply,
+        });
         return reply;
       } else {
         log("url response error");

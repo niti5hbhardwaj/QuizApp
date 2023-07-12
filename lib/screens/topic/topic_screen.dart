@@ -1,9 +1,7 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:quiz_app/screens/error/network_error_screen.dart';
 import 'package:quiz_app/screens/topic/components/subject_icon_tile.dart';
-// import '../../chat_api/chat_api.dart';
-// import '../../chat_api/text_davinci.dart';
+import '../../chat_api/chat_gpt.dart';
 import '../../data/topics.dart';
 import '../error/lost_in_space.dart';
 import '../loading_screen.dart';
@@ -21,8 +19,9 @@ class TopicScreen extends StatefulWidget {
 class _TopicScreenState extends State<TopicScreen> {
   void startQuiz(context, index) async {
     String errorType;
+    ChatGPT chatGPT = ChatGPT();
     Navigator.pushNamed(context, LoadingScreen.id);
-    errorType = await getQuestions(topicList[index].topicName);
+    errorType = await chatGPT.getQuestions(topicList[index].topicName);
     if (errorType == "none" && context.mounted) {
       Navigator.pushReplacementNamed(context, QuizScreen.id);
     } else {
@@ -95,9 +94,9 @@ class _TopicScreenState extends State<TopicScreen> {
   }
 }
 
-Future<String> getQuestions(String topic) async {
-  await Future.delayed(const Duration(seconds: 1, milliseconds: 800), () {
-    return "none";
-  });
-  return "none";
-}
+// Future<String> getQuestions(String topic) async {
+//   await Future.delayed(const Duration(seconds: 1, milliseconds: 800), () {
+//     return "none";
+//   });
+//   return "none";
+// }
