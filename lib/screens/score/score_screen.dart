@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:quiz_app/screens/score/util_functions.dart';
-import 'package:quiz_app/screens/summary.dart';
+import 'package:quiz_app/screens/score/components/util_functions.dart';
+import 'package:quiz_app/screens/summary/summary.dart';
 import 'package:quiz_app/screens/topic/topic_screen.dart';
 
 Color foregroundColor = Colors.blueGrey.shade900;

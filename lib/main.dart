@@ -6,15 +6,14 @@ import 'package:quiz_app/screens/About/about_the_app.dart';
 import 'package:quiz_app/screens/chat_screen/chat_screen.dart';
 import 'package:quiz_app/screens/error/lost_in_space.dart';
 import 'package:quiz_app/screens/error/network_error_screen.dart';
-import 'package:quiz_app/screens/loading_screen.dart';
+import 'package:quiz_app/screens/loading/loading_screen.dart';
 import 'package:quiz_app/screens/profile/profile.dart';
 import 'package:quiz_app/screens/welcome/login/login_screen.dart';
-import 'package:quiz_app/screens/quiz_screen.dart';
+import 'package:quiz_app/screens/quiz/quiz_screen.dart';
 import 'package:quiz_app/screens/score/score_screen.dart';
 import 'package:quiz_app/screens/welcome/signup/signup_screen.dart';
-import 'package:quiz_app/screens/summary.dart';
+import 'package:quiz_app/screens/summary/summary.dart';
 import 'package:quiz_app/screens/topic/topic_screen.dart';
-import 'package:quiz_app/screens/welcome_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,12 +32,11 @@ class QuizApp extends StatelessWidget {
       theme: ThemeData.light(),
       title: "QuizApp",
       debugShowCheckedModeBanner: false,
-      // initialRoute: (FirebaseAuth.instance.currentUser != null)
-      //     ? TopicScreen.id
-      //     : LoginScreen.id,
-      initialRoute: ChatScreen.id,
+      initialRoute: (FirebaseAuth.instance.currentUser != null)
+          ? TopicScreen.id
+          : LoginScreen.id,
+      // initialRoute: TopicScreen.id,
       routes: {
-        WelcomeScreen.id: (context) => const WelcomeScreen(),
         LoginScreen.id: (context) => const LoginScreen(),
         SignUpScreen.id: (context) => const SignUpScreen(),
         TopicScreen.id: (context) => const TopicScreen(),

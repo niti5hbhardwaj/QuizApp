@@ -4,8 +4,8 @@ import 'package:quiz_app/screens/topic/components/subject_icon_tile.dart';
 import '../../chat_api/chat_gpt.dart';
 import '../../data/topics.dart';
 import '../error/lost_in_space.dart';
-import '../loading_screen.dart';
-import '../quiz_screen.dart';
+import '../loading/loading_screen.dart';
+import '../quiz/quiz_screen.dart';
 import 'components/topic_screen_profile_pic.dart';
 
 class TopicScreen extends StatefulWidget {

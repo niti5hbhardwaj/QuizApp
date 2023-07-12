@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../controllers/quiz_brain.dart';
+import '../../../controllers/quiz_brain.dart';
 
 class SummaryCard extends StatelessWidget {
   final int index;

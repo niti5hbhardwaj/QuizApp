@@ -1,8 +1,7 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:quiz_app/controllers/quiz_brain.dart';
-import '../../models/question.dart';
-import '../score/score_screen.dart';
+import '../../../models/question.dart';
+import '../../score/score_screen.dart';
 import 'option.dart';
 
 class QuestionCard extends StatefulWidget {

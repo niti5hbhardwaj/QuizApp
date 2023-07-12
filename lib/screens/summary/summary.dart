@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/controllers/quiz_brain.dart';
 import 'package:quiz_app/screens/chat_screen/chat_screen.dart';
-import 'package:quiz_app/screens/components/summary_card.dart';
+import 'package:quiz_app/screens/summary/components/summary_card.dart';
 
 class SummaryScreen extends StatelessWidget {
   static const id = 'summary_screen';
