@@ -231,11 +231,20 @@ Future<bool> changePhoneNumber(BuildContext context, String value) async {
 
 Future<void> getNewDate(BuildContext context) async {
   DateTime? pickedDate = await showDatePicker(
-    context: context,
-    initialDate: DateTime.now(),
-    firstDate: DateTime(1900),
-    lastDate: DateTime.now(),
-  );
+      context: context,
+      initialDate: DateTime(2001, 4, 4),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+      builder: (context, child) {
+        return Theme(
+            data: Theme.of(context).copyWith(
+                colorScheme: ColorScheme.light(
+              primary: Colors.blueGrey.shade900,
+              onPrimary: Colors.grey.shade100,
+              onSurface: Colors.blueGrey.shade900,
+            )),
+            child: child!);
+      });
   if (pickedDate != null) {
     String date = pickedDate.day.toString();
     String month = pickedDate.month.toString();
