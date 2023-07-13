@@ -66,9 +66,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   color: primaryColor,
                 ),
               ),
-              SizedBox(height: size.height * 0.03),
               Image.asset(
-                "assets/images/login.jpg",
+                "assets/images/signup.png",
                 height: size.height * 0.35,
               ),
               RoundedInputField(

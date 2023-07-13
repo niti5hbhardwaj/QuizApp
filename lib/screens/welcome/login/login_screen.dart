@@ -62,13 +62,13 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: size.height * 0.03),
               Image.asset(
-                "assets/images/signup.jpeg",
+                "assets/images/login.png",
                 height: size.height * 0.35,
               ),
               SizedBox(height: size.height * 0.03),
               RoundedInputField(
                 controller: _emailController,
-                iconData: Icons.person,
+                iconData: Icons.mail_rounded,
                 hintText: 'Email',
                 iconColor: primaryColor,
                 containerColor: secondaryColor,
