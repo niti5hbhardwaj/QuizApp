@@ -37,57 +37,59 @@ class _TopicScreenState extends State<TopicScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
-      body: Column(
-        children: [
-          const Expanded(
-            flex: 1,
-            child: Padding(
-              padding:
-                  EdgeInsets.only(top: 16, bottom: 16, left: 20, right: 20),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            floating: true,
+            snap: true,
+            collapsedHeight: 75,
+            backgroundColor: Colors.grey.shade100,
+            expandedHeight: 85,
+            flexibleSpace: Padding(
+              padding: const EdgeInsets.only(
+                  top: 25, bottom: 16, left: 20, right: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TopicScreenProfilePic(),
+                  const TopicScreenProfilePic(),
                   Expanded(
                     flex: 1,
                     child: Text(
-                      "Select a topic",
+                      "QuizApp",
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 25,
+                        color: Colors.grey.shade800,
+                        letterSpacing: 1,
                       ),
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 40,
                   ),
                 ],
               ),
             ),
           ),
-          Expanded(
-            flex: 7,
-            child: ScrollConfiguration(
-              behavior: const ScrollBehavior().copyWith(overscroll: false),
-              child: GridView.builder(
-                padding: const EdgeInsets.all(20),
-                itemCount: topicList.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    mainAxisSpacing: 20,
-                    crossAxisSpacing: 20,
-                    crossAxisCount: 2),
-                itemBuilder: (context, index) {
-                  return SubjectIconTile(
-                    onTap: () {
-                      startQuiz(context, index);
-                    },
-                    iconPath: topicList[index].topicImage,
-                    subjectName: topicList[index].topicName,
-                  );
-                },
-              ),
+          SliverToBoxAdapter(
+            child: GridView.builder(
+              padding: const EdgeInsets.all(20),
+              itemCount: topicList.length,
+              shrinkWrap: true,
+              primary: false,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  mainAxisSpacing: 20, crossAxisSpacing: 20, crossAxisCount: 2),
+              itemBuilder: (context, index) {
+                return SubjectIconTile(
+                  onTap: () {
+                    startQuiz(context, index);
+                  },
+                  iconPath: topicList[index].topicImage,
+                  subjectName: topicList[index].topicName,
+                );
+              },
             ),
-          ),
+          )
         ],
       ),
     );

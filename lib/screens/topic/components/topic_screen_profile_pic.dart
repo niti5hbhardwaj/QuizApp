@@ -19,12 +19,12 @@ class TopicScreenProfilePic extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
           if (snapshot.hasData && snapshot.data!.exists) {
-            return Hero(
-              tag: "profilePic",
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, ProfileScreen.id);
-                },
+            return GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, ProfileScreen.id);
+              },
+              child: Hero(
+                tag: "profilePic",
                 child: CircleAvatar(
                   radius: 20,
                   backgroundColor: Colors.grey.shade300,
