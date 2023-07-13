@@ -37,10 +37,23 @@ class _UserDetailsState extends State<UserDetails> {
                     children: [
                       Hero(
                         tag: "profilePic",
-                        child: CircleAvatar(
-                          backgroundColor: Colors.grey.shade300,
-                          radius: 75,
-                          backgroundImage: NetworkImage(profilePic),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(75),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.shade400,
+                                blurRadius: 5,
+                                spreadRadius: 1,
+                                offset: const Offset(5, 5),
+                              ),
+                            ],
+                          ),
+                          child: CircleAvatar(
+                            backgroundColor: Colors.grey.shade300,
+                            radius: 75,
+                            backgroundImage: NetworkImage(profilePic),
+                          ),
                         ),
                       ),
                       Positioned(
@@ -56,6 +69,14 @@ class _UserDetailsState extends State<UserDetails> {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.shade400,
+                                  blurRadius: 5,
+                                  spreadRadius: 1,
+                                  offset: const Offset(5, 5),
+                                ),
+                              ],
                             ),
                             child: Icon(
                               Icons.add_a_photo_outlined,
