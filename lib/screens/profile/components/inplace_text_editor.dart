@@ -17,7 +17,8 @@ class InPlaceTextEditor extends StatelessWidget {
           FilteringTextInputFormatter.digitsOnly,
           LengthLimitingTextInputFormatter(10),
         ],
-        keyboardType: TextInputType.number,
+        textInputAction: TextInputAction.done,
+        keyboardType: const TextInputType.numberWithOptions(signed: true),
         controller: controller,
         autofocus: true,
         style: TextStyle(

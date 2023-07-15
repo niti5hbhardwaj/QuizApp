@@ -28,6 +28,11 @@ class QuizApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky,
         overlays: []);
+    // SystemChrome.setSystemUIOverlayStyle(
+    //   SystemUiOverlayStyle(
+    //       systemNavigationBarColor: Colors.transparent,
+    //       statusBarColor: Colors.grey.shade100),
+    // );
     return MaterialApp(
       theme: ThemeData.light(),
       title: "QuizApp",

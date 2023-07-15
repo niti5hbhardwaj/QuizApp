@@ -17,7 +17,6 @@ class ScoreScreen extends StatelessWidget {
         ModalRoute.of(context)?.settings.arguments as Map<String, int>;
     int? score = arguments["score"];
     int? numberOfQuestions = arguments["total_questions"];
-    updateScore(score!);
     return Scaffold(
       backgroundColor: backgroundColor,
       body: Center(
@@ -62,7 +61,9 @@ class ScoreScreen extends StatelessWidget {
                   minWidth: 160,
                   color: foregroundColor,
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, TopicScreen.id);
+                    updateScore(score!);
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, TopicScreen.id, (route) => false);
                   },
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),

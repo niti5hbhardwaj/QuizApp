@@ -7,7 +7,7 @@ class LogoutButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       child: MaterialButton(
         onPressed: () {
           logout(context);
@@ -15,7 +15,7 @@ class LogoutButton extends StatelessWidget {
         color: Colors.blueGrey.shade900,
         height: 60,
         minWidth: 250,
-        elevation: 10,
+        elevation: 4,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),

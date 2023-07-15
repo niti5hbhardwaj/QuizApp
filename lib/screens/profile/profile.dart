@@ -21,16 +21,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey.shade100,
-      body: Column(
-        children: [
-          MyAppBar(
-            title: "Profile Details",
-            foregroundColor: Colors.blueGrey.shade900,
-          ),
-          const UserDetails(),
-          Expanded(
-            flex: 30,
-            child: Column(
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            MyAppBar(
+              title: "Profile Details",
+              foregroundColor: Colors.blueGrey.shade900,
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            const UserDetails(),
+            Column(
               children: [
                 ElevatedContainer(
                   padding: const EdgeInsets.all(15),
@@ -75,9 +78,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ],
             ),
-          ),
-          const LogoutButton(),
-        ],
+            const Spacer(),
+            const LogoutButton(),
+          ],
+        ),
       ),
     );
   }

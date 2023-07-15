@@ -49,7 +49,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 Navigator.pop(context);
               },
               child: SizedBox(
-                height: 81,
+                height: 50,
                 width: double.infinity,
                 child: Row(
                   children: [
@@ -115,8 +115,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 ],
               ),
             ),
-            SizedBox(
-              height: 670,
+            Expanded(
               child: PageView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 controller: _controller,
@@ -135,23 +134,23 @@ class _QuizScreenState extends State<QuizScreen> {
                     quizBrain: _quizBrain),
               ),
             ),
-            const SizedBox(
-              height: 15,
-            ),
-            MaterialButton(
-              onPressed: () {
-                submitQuiz();
-              },
-              color: primaryColor,
-              height: 60,
-              minWidth: 250,
-              elevation: 10,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: const Text(
-                "SUBMIT",
-                style: TextStyle(fontSize: 20, color: Colors.white),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: MaterialButton(
+                onPressed: () {
+                  submitQuiz();
+                },
+                color: primaryColor,
+                height: 60,
+                minWidth: 250,
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: const Text(
+                  "SUBMIT",
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                ),
               ),
             ),
           ],

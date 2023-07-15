@@ -11,35 +11,33 @@ class MyAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      flex: 11,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 16, bottom: 16, left: 20, right: 8),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Icon(
-                Icons.arrow_back,
-                color: foregroundColor,
-              ),
+    return Padding(
+      padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(
+              Icons.arrow_back,
+              color: foregroundColor,
             ),
-            const SizedBox(
-              width: 100,
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.25,
+          ),
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 20,
+              color: foregroundColor,
+              fontWeight: FontWeight.w600,
             ),
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 20,
-                color: foregroundColor,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }

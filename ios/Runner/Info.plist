@@ -52,5 +52,11 @@
       <string>sms</string>
       <string>tel</string>
     </array>
+
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>To pick images from gallery</string>
+    <key>NSCameraUsageDescription</key>
+    <string>To capture images from camera</string>
+
 </dict>
 </plist>

@@ -37,68 +37,74 @@ class _TopicScreenState extends State<TopicScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            floating: true,
-            snap: true,
-            collapsedHeight: 75,
-            backgroundColor: Colors.grey.shade100,
-            expandedHeight: 85,
-            flexibleSpace: Padding(
-              padding: const EdgeInsets.only(
-                  top: 25, bottom: 16, left: 20, right: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const TopicScreenProfilePic(),
-                  Expanded(
-                    flex: 1,
-                    child: Text(
-                      "QuizApp",
-                      style: TextStyle(
-                        fontSize: 25,
-                        color: Colors.grey.shade800,
-                        letterSpacing: 1,
+      body: SafeArea(
+        bottom: false,
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              floating: true,
+              snap: true,
+              collapsedHeight: 75,
+              backgroundColor: Colors.grey.shade100,
+              expandedHeight: 75,
+              flexibleSpace: Padding(
+                padding: const EdgeInsets.only(
+                    top: 15, bottom: 15, left: 25, right: 25),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const TopicScreenProfilePic(),
+                    Expanded(
+                      flex: 1,
+                      child: Text(
+                        "QuizApp",
+                        style: TextStyle(
+                          fontSize: 25,
+                          color: Colors.grey.shade800,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 2,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
                     ),
-                  ),
-                  const SizedBox(
-                    width: 40,
-                  ),
-                ],
+                    const SizedBox(
+                      width: 40,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          SliverToBoxAdapter(
-            child: GridView.builder(
-              padding: const EdgeInsets.all(20),
-              itemCount: topicList.length,
-              shrinkWrap: true,
-              primary: false,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  mainAxisSpacing: 20, crossAxisSpacing: 20, crossAxisCount: 2),
-              itemBuilder: (context, index) {
-                return SubjectIconTile(
-                  onTap: () {
-                    startQuiz(context, index);
-                  },
-                  iconPath: topicList[index].topicImage,
-                  subjectName: topicList[index].topicName,
-                );
-              },
-            ),
-          )
-        ],
+            SliverToBoxAdapter(
+              child: GridView.builder(
+                padding: const EdgeInsets.all(20),
+                itemCount: topicList.length,
+                shrinkWrap: true,
+                primary: false,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    mainAxisSpacing: 20,
+                    crossAxisSpacing: 20,
+                    crossAxisCount: 2),
+                itemBuilder: (context, index) {
+                  return SubjectIconTile(
+                    onTap: () {
+                      startQuiz(context, index);
+                    },
+                    iconPath: topicList[index].topicImage,
+                    subjectName: topicList[index].topicName,
+                  );
+                },
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
 }
 
-// Future<String> getQuestions(String topic) async {
-//   await Future.delayed(const Duration(seconds: 1, milliseconds: 800), () {
-//     return "none";
-//   });
-//   return "none";
-// }
+Future<String> getQuestions(String topic) async {
+  await Future.delayed(const Duration(seconds: 1, milliseconds: 800), () {
+    return "none";
+  });
+  return "none";
+}
