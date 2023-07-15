@@ -81,14 +81,13 @@ class _QuestionCardState extends State<QuestionCard> {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Container(
-        // margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
         padding: const EdgeInsets.all(25),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(25),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.shade300,
+              color: Colors.grey.shade200,
               blurRadius: 10,
               spreadRadius: 4,
               offset: Offset.fromDirection(1, 7),
